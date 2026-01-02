@@ -1,6 +1,5 @@
 // Input system
 
-
 dsl.keys = {
 	"a": {"code": "a", "lastPressed": -1, "lastReleased": -1, "wasDown": 0, "index": 0}, 
 	"b": {"code": "b", "lastPressed": -1, "lastReleased": -1, "wasDown": 0, "index": 1}, 
@@ -194,27 +193,54 @@ dsl.keys = {
 
 
 dsl.keyPressed = function(k)
-	if key.pressed(k) then
-		self.keys[k].lastPressed = time
-		
-		if self.keys[k].wasDown then
-			return false
-		end if
 
-		self.keys[k].lastPressed = time
-		self.keys[k].wasDown = true
-		return true
+	if key.pressed(k) then
+		dsl.keys[k].lastPressed = time
+
+		if dsl.keys[k].wasDown then
+			return false
+		else
+			dsl.keys[k].wasDown = true
+			return true
+		end if
 	end if
 end function
 
 dsl.keyDown = function(k)
 
+	if key.pressed(k) then
+		dsl.keys[k].lastPressed = time
+
+		if dsl.keys[k].wasDown then
+			return true
+		else
+			dsl.keys[k].wasDown = true
+			return false
+		end if
+	end if
 end function
 
-dsl.keyPressed = function(k)
+dsl.keyReleased = function(k)
 
+	if not key.pressed(k) then
+		if dsl.keys[k].wasDown then
+			dsl.keys[k].lastReleased = time
+			dsl.keys[k].wasDown = false
+			return true
+		else
+			return false
+		end if
+	end if
 end function
 
-dsl.keyPressed = function(k)
+dsl.keyUp = function(k)
 
+	if not key.pressed(k) then
+		if not dsl.keys[k].wasDown and (time - dsl.keys[k].lastTime) > dsl.dt then
+			return true
+		else
+			return false
+		end if
+	end if
 end function
+
