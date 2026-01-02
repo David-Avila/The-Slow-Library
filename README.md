@@ -4,10 +4,11 @@ This is a small personal library that I'm creating to speed up development of ga
 # Game loop
 DSL offers handy functions to avoid boilerplate, but gives you the freedom to choose how you manage the main loop.
 
+You have access to several properties, `dt`, `frameCount`, `lastTime`. All of which can be acces with `dsl.PROPERTY`
+
 **Sample Gameloop**
 ```
 import "DSL"
-
 
 dsl.loop = function
 	// Override this function to update your game and

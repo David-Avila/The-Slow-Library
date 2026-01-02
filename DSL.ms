@@ -23,9 +23,6 @@ dsl.stop = function; dsl.running = false ;end function
 dsl.loop = function(dt); end function
 
 if locals == globals then
-
-	// Loop function gives you acces to the game's main loop and delta time
-	// You can acces delta time with dsl.dt
 	dsl.loop = function
 		if dsl.keyPressed("escape") then
 			dsl.stop
