@@ -10,3 +10,7 @@ dsl.keyReleased(key)
 dsl.keyDown(key)
 dsl.keyUp(key)
 ```
+
+Each function returns `true` or `false`.
+
+**TODO**: Assert the key passed to each function to avoid crashes when the key is not found
