@@ -2,6 +2,7 @@
 globals.dsl = {}
 
 // Library features
+import "DSL_Debug"
 import "DSL_Input"
 
 dsl.running = true
