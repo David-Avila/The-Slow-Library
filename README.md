@@ -1,6 +1,30 @@
 # The Slow Library (DSL)
 This is a small personal library that I'm creating to speed up development of games during a game jam.
 
+# Game loop
+DSL offers handy functions to avoid boilerplate, but gives you the freedom to choose how you manage the main loop.
+
+**Sample Gameloop**
+```
+import "DSL"
+
+
+dsl.loop = function
+	// Override this function to update your game and
+	// add gameplay functionality
+end funtion
+
+while dsl.running
+	dsl.update
+
+	// If you don't use the `dsl.loop` function, you can 
+	// add your code here and still take advantage of the 
+	// library's systems
+
+	yield
+end while
+```
+
 # Input system
 DSL's input system exposes 4 functions:
 
