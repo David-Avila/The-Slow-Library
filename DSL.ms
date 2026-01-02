@@ -41,7 +41,7 @@ dsl.update = function
 end function
 
 
-
+//*************** DEMO
 if locals == globals then
 	dsl.loop = function
 		if dsl.keyPressed("escape") then
