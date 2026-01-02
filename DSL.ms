@@ -1,6 +1,9 @@
 // Game loop
 globals.dsl = {}
 
+// Library features
+import "DSL_Input"
+
 dsl.running = true
 
 dsl.frameCount = 0
