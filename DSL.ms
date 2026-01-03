@@ -3,6 +3,7 @@ globals.dsl = {}
 
 // Library features
 import "DSL_Debug"
+import "DSL_Display"
 import "DSL_Input"
 import "DSL_Entity"
 
@@ -42,38 +43,15 @@ dsl.update = function
 	key.clear
 end function
 
-
 //*************** DEMO
 if locals == globals then
-	ent = {}
-	ent.alive = true
-	ent.update = function(dt)
-		if dsl.keyPressed("a") then 
-			print "A"
-		end if
+	while dsl.running
+		dsl.update
 
-		if dsl.keyReleased("a") then 
-			print "A"
-		end if
-
-		if dsl.keyPressed("d") then
-			print "Deleted"
-			self.alive = false
-		end if
-	end function
-
-	ents = [ent]
-
-	dsl.loop = function
-		
 		if dsl.keyPressed("escape") then
 			dsl.stop
 		end if
-		dsl.entt.update ents
-	end function
 
-	while dsl.running
-		dsl.update
 		yield
 	end while
 
