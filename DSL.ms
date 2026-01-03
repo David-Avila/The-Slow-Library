@@ -54,5 +54,4 @@ if locals == globals then
 
 		yield
 	end while
-
 end if
