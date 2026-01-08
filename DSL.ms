@@ -125,3 +125,17 @@ dsl.importImages = function(folder)
 		dsl.images[f.name] = file.loadImage(f.path)
 	end for
 end function
+
+dsl.sounds = {}
+dsl.importSounds = function(folder)
+	path = pwd + "/" + folder
+
+	// file.info(pathToFolderOrFile)
+	// file.name(pathToFolderOrFile) -- return just the file or folder name without the path
+	// file.children(path) -- returns an array with the names of the folders and files inside the path
+	filesFound = dsl._scanFolder(path, "wav")
+
+	for f in filesFound
+		dsl.sounds[f.name] = file.loadSound(f.path)
+	end for
+end function
