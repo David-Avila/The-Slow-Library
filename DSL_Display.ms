@@ -10,14 +10,14 @@ dsl.disp.TILE = displayMode.tile
 dsl.disp.OFF = displayMode.off
 
 // Default displays
-SOL = display(7) // Solid
+globals.SOL = display(7) // Solid
 // display(6) - not used
-SPD = display(5) // Sprite
-GFX = display(4) // Pixel
-TXT = display(3) // Text
-UID = display(2) // UI
-TRD = display(1) // Transitions
-TOD = display(0) // Top display
+globals.GFX = display(5) // Sprite
+globals.SPD = display(4) // Pixel
+globals.TXT = display(3) // Text
+globals.UID = display(2) // UI
+globals.TRD = display(1) // Transitions
+globals.TOD = display(0) // Top display
 
 // Modes
 UID.mode = dsl.disp.SPRITE
