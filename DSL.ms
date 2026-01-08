@@ -43,15 +43,85 @@ dsl.update = function
 	key.clear
 end function
 
-//*************** DEMO
-if locals == globals then
-	while dsl.running
-		dsl.update
+//**************************************
+if false then
+	spaces = " "*80
+	text.delimiter = char(13)
+	
+	dirInfo = file.info(path)
+	if dirInfo == null then
+		print "Invalid path"
+		return
+	end if
 
-		if dsl.keyPressed("escape") then
-			dsl.stop
+	lines = [dirInfo.path + " : "]	
+
+	if not dirInfo.isDirectory then
+		files = [file.name(dirInfo.path)]
+		dirInfo = file.info(file.parent(dirInfo.path))
+	else
+		files = file.children(dirInfo.path)
+		if files.len == 0 then
+			print lines[0]
+			print "  (Directory empty)"
+			return
 		end if
-
-		yield
-	end while
+	end if
+	
+	files.sort
+	for i in range(0, files.len-1)
+		finfo = file.info(file.child(dirInfo.path,files[i]))
+		if finfo == null then
+			lines.push "file.info failed on: " + file.child(path, files[i])
+			continue
+		end if
+		namecol = (files[i]+spaces)[:32]
+		sizecol = (spaces+finfo.size)[-8:]
+		if finfo.isDirectory then sizecol = "     DIR"
+		lines.push "  " + namecol + sizecol + "  " + finfo.date
+	end for
+	pageThrough lines
 end if
+//**************************************
+
+dsl._scanFolder = function(path, ext)
+	filesFound = []
+
+	for f in file.children(path)
+		fileOrFolder = path + "/" + f
+		if not file.info(fileOrFolder).isDirectory then
+			fileName = file.name(fileOrFolder)
+
+			fN = fileName.split(".")
+
+			fN[0] = fN[0].replace(" ", "_")
+			fN[0] = fN[0].replace("-", "_")
+
+			if fN[1] == ext then
+				filesFound.push {"name": fN[0], "path": fileOrFolder}
+			end if
+		else
+			imgs = dsl._scanFolder(fileOrFolder, ext)
+
+			for ff in imgs
+				filesFound.push ff
+			end for
+		end if
+	end for
+
+	return filesFound
+end function
+
+dsl.images = {}
+dsl.importImages = function(folder)
+	path = pwd + "/" + folder
+
+	// file.info(pathToFolderOrFile)
+	// file.name(pathToFolderOrFile) -- return just the file or folder name without the path
+	// file.children(path) -- returns an array with the names of the folders and files inside the path
+	filesFound = dsl._scanFolder(path, "png")
+
+	for f in filesFound
+		dsl.images[f.name] = file.loadImage(f.path)
+	end for
+end function
