@@ -28,6 +28,21 @@ while dsl.running
 end while
 ```
 
+# Helper functions
+By importing `DSL` you have access to a couple of functions to save time.
+
+Use this functions to recursively find assets starting from the folder name you pass
+NOTE: PATH should be relative path, NOT absolute
+
+```
+dsl.importImages(PATH)
+dsl.importSounds(PATH)
+```
+
+After using any of this functions, you can access the loaded assets through `dsl.images` or `dsl.sounds` 
+depending on the function you called.
+
+
 # Input system
 DSL's input system exposes 4 functions:
 
