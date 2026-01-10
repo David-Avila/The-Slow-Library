@@ -143,3 +143,13 @@ dsl.fatal "Big error, aborting"
 View those logs using `view "log.txt"` in Mini Micro, or your favorite text editor.
 
 **NOTE**: The logging system overrides `prev_log.txt` with the content of `log.txt` and then replaces `log.txt` with the new logs, if you want to keep logs from previous runs use `file.copy "log.txt", "old_log.txt"` before running again. You can use any name you want for old logs, that's up to you.
+
+# Entity Functions
+One function that you can use to handle basic entities.
+
+```
+dsl.entt.update entityList
+```
+This function will loop through the list, update all entities inside it and check if the variable `alive` is `true`, if it's false then that entity will be removed from the list. Optionally, if the entity has a function called `onDelete`, it will be called, so you can specify the exact behaviour an entity should have when deleted.
+
+If you want to use this file alone, aside from declaring `globals.dsl = {}` you should also declare `dsl.dt` accordingly, since delta time will be passed to entities when updated.
