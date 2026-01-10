@@ -42,6 +42,29 @@ dsl.importSounds(PATH)
 After using any of this functions, you can access the loaded assets through `dsl.images` or `dsl.sounds` 
 depending on the function you called.
 
+# Animation System
+`DSL` counts with a small yet solid animation system. With just two functions you can create an animate any sprite.
+
+```
+// This function returns an animation that you can use with `dsl.anim.animate`
+dsl.anim.create(spriteSheetImage, individualFrameWidth, animationSpeed)
+
+// animationSpeed's default value is 10
+
+dsl.anim.animate(spriteToAnimate, animation)
+```
+
+Check the next example to see how it works.
+
+```
+player = new Sprite
+player.idleAnimation = dsl.anim.create(dsl.images.player_idle_sheet, 16)
+
+player.update = function
+	dsl.anim.animate self, self.idleAnimation
+end function
+
+```
 
 # Input system
 DSL's input system exposes 4 functions:
