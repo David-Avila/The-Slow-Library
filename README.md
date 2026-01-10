@@ -64,6 +64,12 @@ If you don't provide a path, the functions will start scanning at the root of th
 After using any of this functions, you can access the loaded assets through `dsl.images` or `dsl.sounds` 
 depending on the function you called.
 
+**IMPORTANT RULE**: There should be only one file with the same name and extension across all project folders. If there
+are more than one file, i.e two files called `player.png`, then the last file found will be the one that is saved to `dsl.images` or `dsl.sounds`. Spaces and dashes on file names will be replaced by a `_`.
+
+For instance:
+A file called `player idle.png` or `player-idle.png` will be stored as `player_idle`, and can be accessed with `dsl.images.player_idle`. That also applies to sound effects and music.
+
 # Animation System
 `DSL` counts with a small yet solid animation system. With just two functions you can create an animate any sprite.
 
