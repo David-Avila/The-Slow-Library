@@ -139,8 +139,6 @@ dsl.error "There is definitly something wrong here"
 dsl.fatal "Big error, aborting"
 ```
 
-View those logs using `view "log.txt"` in Mini Micro, or your favorite text editor. A copy of the previous log is saved to `prev_log.txt` before replacing the `log.txt` file.
+View those logs using `view "log.txt"` in Mini Micro, or your favorite text editor.
 
-**NOTE**: The logging system overrides previus `log.txt` files, if you want to keep logs from previous runs
-use `file.copy "log.txt", "old_log.txt"` before running again. You can use any name you want for old logs, that's
-up to you.
+**NOTE**: The logging system overrides `prev_log.txt` with the content of `log.txt` and then replaces `log.txt` with the new logs, if you want to keep logs from previous runs use `file.copy "log.txt", "old_log.txt"` before running again. You can use any name you want for old logs, that's up to you.
