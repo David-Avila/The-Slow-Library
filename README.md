@@ -152,4 +152,4 @@ dsl.entt.update entityList
 ```
 This function will loop through the list, update all entities inside it and check if the variable `alive` is `true`, if it's false then that entity will be removed from the list. Optionally, if the entity has a function called `onDelete`, it will be called, so you can specify the exact behaviour an entity should have when deleted.
 
-If you want to use this file alone, aside from declaring `globals.dsl = {}` you should also declare `dsl.dt` accordingly, since delta time will be passed to entities when updated.
+If you want to use this file alone, aside from declaring `globals.dsl = {}` you should also declare `dsl.dt` accordingly, since delta time will be passed to entities when updated. So make sure to calculate `delta time` and set `dsl.dt`.
