@@ -17,6 +17,8 @@ dsl.entt.update = function(list)
 	end for
 
 	while toDelete.len > 0
+		if toDelete[0].hasIndex("onDelete") then toDelete[0].onDelete
+
 		list.removeVal toDelete[0]
 		toDelete.removeVal toDelete[0]
 	end while
