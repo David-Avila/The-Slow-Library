@@ -97,6 +97,24 @@ dsl.keyUp(key)
 
 Each function returns `true` or `false`.
 
+
+```
+dsl.axis(axis)
+dsl.axis(leftKey, rightKey)
+```
+
+**Axis available are**:
+Joystick, WASD and arrow keys:
+`Horizontal`, `Vertical`
+
+Mouse:
+`Mouse X`, `Mouse Y`
+
+Joysticks only:
+`JoyAxis1` through `JoyAxis29` which detect axis input from any joystick or gamepad
+`Joy1Axis1` through `Joy8Axis29` which detect axis inputs from specific joystick/gamepad 1 through 8.
+
+
 **TODO**: Assert the key passed to each function to avoid crashes when the key is not found
 
 # Logging functions
