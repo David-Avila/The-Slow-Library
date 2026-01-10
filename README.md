@@ -1,5 +1,22 @@
 # The Slow Library (DSL)
-This is a small personal library that I'm creating to speed up development of games during a game jam.
+This is a small personal library that I'm creating to speed up development of games during a game jam. You can
+use the complete library or just the file you want. 
+
+**NOTES FOR SINGLE FILE USE**:
+If you don't use the library by importing `DSL.ms` and just want to use one of the modules, make sure to declare
+the variable `dsl` as global:
+
+```
+globals.dsl = {}
+
+// then you can import any of the stand alone files
+import "DSL_Log"
+import "DSL_Animations"
+import "DSL_Input"
+import "DSL_Entity"
+import "DSL_Display"
+import "DSL_Debug" // WIP
+```
 
 # Game loop
 DSL offers handy functions to avoid boilerplate, but gives you the freedom to choose how you manage the main loop.
