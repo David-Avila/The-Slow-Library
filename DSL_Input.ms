@@ -236,3 +236,13 @@ dsl.keyUp = function(k)
 	return cState == "up"
 end function
 
+dsl.axis = function(k1, k2="")
+	if k1 == "Horizontal" or k1 == "Vertical" then
+		return key.axis(k1)
+	else if k2 != "" then
+		k1P = dsl.checkKeyState(k1)
+		k2P = dsl.checkKeyState(k2)
+
+		return k2P - k1P
+	end if
+end function
