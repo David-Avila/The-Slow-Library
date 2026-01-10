@@ -86,8 +86,9 @@ end function
 ```
 
 # Input system
-DSL's input system exposes 4 functions:
+DSL's input system exposes 5 functions:
 
+Each of these functions returns `true` or `false`.
 ```
 dsl.keyPressed(key)
 dsl.keyReleased(key)
@@ -95,8 +96,7 @@ dsl.keyDown(key)
 dsl.keyUp(key)
 ```
 
-Each function returns `true` or `false`.
-
+This function returns a range between `-1` adn `1`:
 
 ```
 dsl.axis(axis)
