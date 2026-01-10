@@ -21,7 +21,7 @@ recordStartup
 dsl.log = function(msg)
 	content = file.readLines(logFile)
 
-	content.push "INFO at frame #" + dsl.frameCount + ": " + msg
+	content.push "INFO at " + round(time, 3) + "s: " + msg
 
 	file.writeLines logFile, content
 end function
@@ -29,7 +29,7 @@ end function
 dsl.warn = function(msg)
 	content = file.readLines(logFile)
 
-	content.push "WARNING at frame #" + dsl.frameCount + ": " + msg
+	content.push "WARNING at " + round(time, 3) + "s: " + msg
 
 	file.writeLines logFile, content
 end function
@@ -37,7 +37,7 @@ end function
 dsl.error = function(msg)
 	content = file.readLines(logFile)
 
-	content.push "ERROR at frame #" + dsl.frameCount + ": " + msg
+	content.push "ERROR at " + round(time, 3) + "s: " + msg
 
 	file.writeLines logFile, content
 end function
@@ -45,7 +45,7 @@ end function
 dsl.fatal = function(msg)
 	content = file.readLines(logFile)
 
-	content.push ("FATAL at frame #" + dsl.frameCount + ": " + msg).upper
+	content.push ("FATAL at " + round(time, 3) + "s: " + msg).upper
 
 	file.writeLines logFile, content
 end function
