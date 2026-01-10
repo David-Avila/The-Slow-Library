@@ -243,6 +243,6 @@ dsl.axis = function(k1, k2="")
 		k1P = dsl.checkKeyState(k1)
 		k2P = dsl.checkKeyState(k2)
 
-		return k2P - k1P
+		return (k2P == "down" or k2P == "pressed") - (k1P == "down" or k1P == "pressed")
 	end if
 end function
