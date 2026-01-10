@@ -81,3 +81,20 @@ dsl.keyUp(key)
 Each function returns `true` or `false`.
 
 **TODO**: Assert the key passed to each function to avoid crashes when the key is not found
+
+# Logging functions
+Use this functions to log important messages to `log.txt`.
+
+```
+dsl.log "Player spawned correctly"
+
+dsl.warn "Something is not working"
+
+dsl.error "There is definitly something wrong here"
+
+dsl.fatal "Big error, aborting"
+```
+
+**NOTE**: The logging system overrides previus `log.txt` files, if you want to keep logs from previous runs
+use `file.copy "log.txt" "old_log.txt"` before running again. You can use any name you want for old logs, that's
+up to you
