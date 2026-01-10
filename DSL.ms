@@ -89,7 +89,12 @@ dsl._scanFolder = function(path, ext)
 	filesFound = []
 
 	for f in file.children(path)
-		fileOrFolder = path + "/" + f
+		if path[-1] == "/" then
+			fileOrFolder = path + f
+		else
+			fileOrFolder = path + "/" + f
+		end if
+
 		if not file.info(fileOrFolder).isDirectory then
 			fileName = file.name(fileOrFolder)
 
