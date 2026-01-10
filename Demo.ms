@@ -1,7 +1,5 @@
 import "DSL"
 
-dsl.importImages("assets")
-
 while dsl.running
 	dsl.update
 

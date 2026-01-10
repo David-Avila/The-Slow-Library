@@ -6,6 +6,7 @@ import "DSL_Debug"
 import "DSL_Display"
 import "DSL_Input"
 import "DSL_Entity"
+import "DSL_Animations"
 
 dsl.running = true
 
