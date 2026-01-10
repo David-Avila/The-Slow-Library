@@ -55,8 +55,8 @@ Use this functions to recursively find assets starting from the folder name you 
 NOTE: PATH should be relative path, NOT absolute
 
 ```
-dsl.importImages(PATH)
-dsl.importSounds(PATH)
+dsl.importImages PATH
+dsl.importSounds PATH
 ```
 
 If you don't provide a path, the functions will start scanning at the root of the project.
@@ -79,7 +79,7 @@ dsl.anim.create(spriteSheetImage, individualFrameWidth, animationSpeed)
 
 // animationSpeed's default value is 10
 
-dsl.anim.animate(spriteToAnimate, animation)
+dsl.anim.animate spriteToAnimate, animation
 ```
 
 Check the next example to see how it works.
@@ -105,7 +105,7 @@ dsl.keyDown(key)
 dsl.keyUp(key)
 ```
 
-This function returns a range between `-1` adn `1`:
+This function returns a range between `-1` and `1`:
 
 ```
 dsl.axis(axis)
@@ -127,7 +127,7 @@ Joysticks only:
 **TODO**: Assert the key passed to each function to avoid crashes when the key is not found
 
 # Logging functions
-Use this functions to log important messages to `log.txt`.
+Use these functions to log important messages to `log.txt`.
 
 ```
 dsl.log "Player spawned correctly"
@@ -139,6 +139,8 @@ dsl.error "There is definitly something wrong here"
 dsl.fatal "Big error, aborting"
 ```
 
+View those logs using `view "log.txt"` in Mini Micro, or your favorite text editor.
+
 **NOTE**: The logging system overrides previus `log.txt` files, if you want to keep logs from previous runs
-use `file.copy "log.txt" "old_log.txt"` before running again. You can use any name you want for old logs, that's
-up to you
+use `file.copy "log.txt", "old_log.txt"` before running again. You can use any name you want for old logs, that's
+up to you.
