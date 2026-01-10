@@ -89,14 +89,12 @@ dsl._scanFolder = function(path, ext)
 	filesFound = []
 
 	for f in file.children(path)
-		if path[-1] == "/" then
-			fileOrFolder = path + f
-		else
-			fileOrFolder = path + "/" + f
-		end if
+		fileOrFolder = path + "/" + f
 
 		if not file.info(fileOrFolder).isDirectory then
 			fileName = file.name(fileOrFolder)
+
+			if fileName.indexOf(".") == null then continue
 
 			fN = fileName.split(".")
 
@@ -119,12 +117,13 @@ dsl._scanFolder = function(path, ext)
 end function
 
 dsl.images = {}
-dsl.importImages = function(folder)
-	path = pwd + "/" + folder
+dsl.importImages = function(folder="")
+	if folder == "" then
+		path = pwd
+	else
+		path = pwd + "/" + folder
+	end if
 
-	// file.info(pathToFolderOrFile)
-	// file.name(pathToFolderOrFile) -- return just the file or folder name without the path
-	// file.children(path) -- returns an array with the names of the folders and files inside the path
 	filesFound = dsl._scanFolder(path, "png")
 
 	for f in filesFound
@@ -134,11 +133,12 @@ end function
 
 dsl.sounds = {}
 dsl.importSounds = function(folder)
-	path = pwd + "/" + folder
+	if folder == "" then
+		path = pwd
+	else
+		path = pwd + "/" + folder
+	end if
 
-	// file.info(pathToFolderOrFile)
-	// file.name(pathToFolderOrFile) -- return just the file or folder name without the path
-	// file.children(path) -- returns an array with the names of the folders and files inside the path
 	filesFound = dsl._scanFolder(path, "wav")
 
 	for f in filesFound
