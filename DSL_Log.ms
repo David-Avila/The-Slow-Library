@@ -39,7 +39,7 @@ end function
 dsl.fatal = function(msg)
 	content = file.readLines(logFile)
 
-	content.push "FATAL at frame #" + dsl.frameCount + ": " + msg
+	content.push "FATAL at frame #" + dsl.frameCount + ": " + msg.upper
 
 	file.writeLines logFile, content
 end function
