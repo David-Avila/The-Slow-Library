@@ -39,6 +39,8 @@ dsl.importImages(PATH)
 dsl.importSounds(PATH)
 ```
 
+If you don't provide a path, the functions will start scanning at the root of the project.
+
 After using any of this functions, you can access the loaded assets through `dsl.images` or `dsl.sounds` 
 depending on the function you called.
 
