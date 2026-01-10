@@ -44,47 +44,6 @@ dsl.update = function
 	key.clear
 end function
 
-//**************************************
-if false then
-	spaces = " "*80
-	text.delimiter = char(13)
-	
-	dirInfo = file.info(path)
-	if dirInfo == null then
-		print "Invalid path"
-		return
-	end if
-
-	lines = [dirInfo.path + " : "]	
-
-	if not dirInfo.isDirectory then
-		files = [file.name(dirInfo.path)]
-		dirInfo = file.info(file.parent(dirInfo.path))
-	else
-		files = file.children(dirInfo.path)
-		if files.len == 0 then
-			print lines[0]
-			print "  (Directory empty)"
-			return
-		end if
-	end if
-	
-	files.sort
-	for i in range(0, files.len-1)
-		finfo = file.info(file.child(dirInfo.path,files[i]))
-		if finfo == null then
-			lines.push "file.info failed on: " + file.child(path, files[i])
-			continue
-		end if
-		namecol = (files[i]+spaces)[:32]
-		sizecol = (spaces+finfo.size)[-8:]
-		if finfo.isDirectory then sizecol = "     DIR"
-		lines.push "  " + namecol + sizecol + "  " + finfo.date
-	end for
-	pageThrough lines
-end if
-//**************************************
-
 dsl._scanFolder = function(path, ext)
 	filesFound = []
 
