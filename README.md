@@ -1,6 +1,9 @@
 # The Slow Library (DSL)
-This is a small personal library that I'm creating to speed up development of games during a game jam. You can
-use the complete library or just the file you want. 
+This is a small personal library that I'm creating to speed up development of games during a game jam. It is meant to
+be a collection of functions and system, that help getting started with new projects. It is NOT meant to take control
+of the game loop, rendering nor any other important part of the development process.
+
+You can use the complete library or just the file you want. 
 
 **NOTES FOR SINGLE FILE USE**:
 If you don't use the library by importing `DSL.ms` and just want to use one of the modules, make sure to declare
