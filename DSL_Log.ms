@@ -1,9 +1,15 @@
 // Logging system
 
 logFile = "log.txt"
+prevLogFile = "prev_log.txt"
 
 recordStartup = function
 	content = []
+
+	if file.exists(logFile) then
+		if file.exists(prevLogFile) then file.delete(prevLogFile)
+		file.copy logFile, prevLogFile
+	end if
 
 	content.push "Starting up..."
 
