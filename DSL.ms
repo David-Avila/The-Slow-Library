@@ -7,6 +7,7 @@ import "DSL_Display"
 import "DSL_Input"
 import "DSL_Entity"
 import "DSL_Animations"
+import "DSL_Log"
 
 dsl.running = true
 
