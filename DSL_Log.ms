@@ -22,7 +22,7 @@ recordStartup
 dsl.log = function(msg)
 	content = file.readLines(logFile)
 
-	content.push "WARNING - DSL: dsl.log is deprecated, the new name is dsl.info."
+	content.push "WARNING - DSL: 'dsl.log' is deprecated, the new name is 'dsl.info'."
 	content.push "INFO at " + round(time, 3) + "s: " + msg
 
 	file.writeLines logFile, content
