@@ -1,13 +1,12 @@
 // Game loop
 globals.dsl = {}
 
-import "importUtil"
-
 checkImport = function(fileName)
 	f = fileName + ".ms"
 
 	if file.exists(f) then
-		ensureImport fileName
+		import fileName
+		globals.fileName = fileName
 	end if
 end function
 
