@@ -16,9 +16,11 @@ globals.dsl = {}
 import "DSL_Log"
 import "DSL_Animations"
 import "DSL_Input"
-import "DSL_Entity"
 import "DSL_Display"
 import "DSL_Debug" // WIP
+
+// this module requires an extra variable, see Entity system at the end.
+import "DSL_Entity"
 ```
 
 # Game loop
