@@ -9,7 +9,7 @@ dsl.entt.update = function(list)
 	for e in list
 		if e.alive then
 			if e.hasIndex("update") then
-				e.update dsl.dt
+				e.update
 			else
 				if globals.hasIndex("DSL_Log") then
 					dsl.error "DSL: The entity you are updating with dsl.entt.update does not contains an 'update' function. Make sure there is not a typo in the declaration."
