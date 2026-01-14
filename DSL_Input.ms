@@ -217,32 +217,84 @@ dsl.checkKeyState = function(k)
 end function
 
 dsl.keyPressed = function(k)
+
+	if key.keyNames.indexOf(k) == null then
+		if globals.hasIndex("DSL_Log") then
+			dsl.error "DSL: Key passed to 'dsl.keyPressed' does not exists. Key Passed: " + k
+		end if
+
+		return null
+	end if
+
 	cState = dsl.checkKeyState(k)
 	return cState == "pressed"
 end function
 
 dsl.keyDown = function(k)
+
+	if key.keyNames.indexOf(k) == null then
+		if globals.hasIndex("DSL_Log") then
+			dsl.error "DSL: Key passed to 'dsl.keyDown' does not exists. Key Passed: " + k
+		end if
+
+		return null
+	end if
+
 	cState = dsl.checkKeyState(k)
 	return cState == "down"
 end function
 
 dsl.keyReleased = function(k)
+
+	if key.keyNames.indexOf(k) == null then
+		if globals.hasIndex("DSL_Log") then
+			dsl.error "DSL: Key passed to 'dsl.keyReleased' does not exists. Key Passed: " + k
+		end if
+
+		return null
+	end if
+
 	cState = dsl.checkKeyState(k)
 	return cState == "released"
 end function
 
 dsl.keyUp = function(k)
+
+	if key.keyNames.indexOf(k) == null then
+		if globals.hasIndex("DSL_Log") then
+			dsl.error "DSL: Key passed to 'dsl.keyUp' does not exists. Key Passed: " + k
+		end if
+
+		return null
+	end if
+
 	cState = dsl.checkKeyState(k)
 	return cState == "up"
 end function
 
 dsl.axis = function(k1, k2="")
-	if k1 == "Horizontal" or k1 == "Vertical" then
-		return key.axis(k1)
-	else if k2 != "" then
+	if not k1 isa string then
+		if globals.hasIndex("DSL_Log") then
+			dsl.error "DSL: First axis/key passed to 'dsl.axis' is not a string. Axis/Key Passed: " + k1
+		end if
+
+		return null
+	end if
+
+	if k2 != "" then
+		if not k2 isa string then
+			if globals.hasIndex("DSL_Log") then
+				dsl.error "DSL: Second key passed to 'dsl.axis' is not a string. Key Passed: " + k2
+			end if
+
+			return null
+		end if
+
 		k1P = dsl.checkKeyState(k1)
 		k2P = dsl.checkKeyState(k2)
 
 		return (k2P == "down" or k2P == "pressed") - (k1P == "down" or k1P == "pressed")
+	else
+		return key.axis(k1)
 	end if
 end function

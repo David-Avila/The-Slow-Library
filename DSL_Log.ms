@@ -11,7 +11,7 @@ recordStartup = function
 		file.copy logFile, prevLogFile
 	end if
 
-	content.push "Starting up..."
+	content.push "DSL: Starting up..."
 
 	file.writeLines logFile, content
 end function
