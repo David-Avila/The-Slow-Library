@@ -18,7 +18,7 @@ end function
 
 recordStartup
 
-dsl.log = function(msg)
+dsl.info = function(msg)
 	content = file.readLines(logFile)
 
 	content.push "INFO at " + round(time, 3) + "s: " + msg
