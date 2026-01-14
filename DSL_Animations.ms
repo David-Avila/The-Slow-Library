@@ -1,5 +1,7 @@
 // Sprite animation system
 
+globals.DSL_ANIMATIONS = true
+
 dsl.anim = {}
 
 _anim = {}

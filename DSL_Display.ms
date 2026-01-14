@@ -1,5 +1,7 @@
 // Display Managment
 
+globals.DSL_DISPLAYS = true
+
 dsl.disp = {}
 
 dsl.disp.SPRITE = displayMode.sprite

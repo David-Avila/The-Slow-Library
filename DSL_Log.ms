@@ -1,5 +1,7 @@
 // Logging system
 
+globals.DSL_LOG = true
+
 logFile = "log.txt"
 prevLogFile = "prev_log.txt"
 

@@ -1,5 +1,7 @@
 // Input system
 
+globals.DSL_INPUT = true
+
 dsl.keys = {
 	"a": {"code": "a", "lastPressed": -1, "lastReleased": -1, "wasDown": 0, "index": 0, "state" : "up", "lastChecked": -1}, 
 	"b": {"code": "b", "lastPressed": -1, "lastReleased": -1, "wasDown": 0, "index": 1, "state" : "up", "lastChecked": -1}, 

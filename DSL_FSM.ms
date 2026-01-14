@@ -1,5 +1,7 @@
 // Finite State Machine
 
+globals.DSL_FSM = true
+
 dsl.sm = {}
 
 dsl.sm.state = {}

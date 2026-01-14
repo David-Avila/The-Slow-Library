@@ -1,4 +1,6 @@
 // Game loop
+globals.DSL_LIB = true
+
 globals.dsl = {}
 
 // Library features
