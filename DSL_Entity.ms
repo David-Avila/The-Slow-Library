@@ -1,8 +1,6 @@
 // Entity System
 import "listUtil"
 
-globals.DSL_ENTITY = true
-
 dsl.entt = {}
 
 dsl.entt.update = function(list)

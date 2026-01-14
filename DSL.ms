@@ -1,15 +1,23 @@
 // Game loop
-globals.DSL_LIB = true
-
 globals.dsl = {}
 
+import "importUtil"
+
+checkImport = function(fileName)
+	f = fileName + ".ms"
+
+	if file.exists(f) then
+		ensureImport fileName
+	end if
+end function
+
 // Library features
-import "DSL_Debug"
-import "DSL_Display"
-import "DSL_Input"
-import "DSL_Entity"
-import "DSL_Animations"
-import "DSL_Log"
+checkImport "DSL_Debug"
+checkImport "DSL_Display"
+checkImport "DSL_Input"
+checkImport "DSL_Entity"
+checkImport "DSL_Animations"
+checkImport "DSL_Log"
 
 dsl.running = true
 

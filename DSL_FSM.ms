@@ -1,7 +1,4 @@
 // Finite State Machine
-
-globals.DSL_FSM = true
-
 dsl.sm = {}
 
 dsl.sm.state = {}
@@ -14,6 +11,7 @@ dsl.sm.change = function(newState)
 		self.state.exit newState
 		self.state = newState
 		self.state.enter newState
+	else if 
 	end if
 end function
 
