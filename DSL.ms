@@ -6,7 +6,7 @@ checkImport = function(fileName)
 
 	if file.exists(f) then
 		import fileName
-		globals.fileName = fileName
+		globals[fileName] = fileName
 	end if
 end function
 
@@ -17,6 +17,7 @@ checkImport "DSL_Input"
 checkImport "DSL_Entity"
 checkImport "DSL_Animations"
 checkImport "DSL_Log"
+checkImport "DSL_FSM"
 
 dsl.running = true
 
