@@ -58,7 +58,7 @@ end function
 dsl.newSprite = function(imgOrPath, x=0, y=0, scale=1)
 	s = new Sprite
 	if imgOrPath isa string then
-		s.image = file.loadImage(imageOrPath)
+		s.image = file.loadImage(imgOrPath)
 	else
 		s.image = imgOrPath
 	end if
