@@ -1,5 +1,5 @@
 // Display Managment
-
+import "listUtil"
 dsl.disp = {}
 
 dsl.disp.SPRITE = displayMode.sprite
@@ -23,3 +23,12 @@ globals.TOD = display(0) // Top display
 UID.mode = dsl.disp.SPRITE
 TRD.mode = dsl.disp.SPRITE
 TOD.mode = dsl.disp.SPRITE
+
+// Helper functions
+SPD.add = function(sprite)
+	SPD.sprites.push sprite
+end function
+
+SPD.remove = function(sprite)
+	SPD.sprites.removeVal sprite
+end function
