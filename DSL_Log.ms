@@ -4,58 +4,50 @@ logFile = "log.txt"
 prevLogFile = "prev_log.txt"
 
 recordStartup = function
-	content = []
 
 	if file.exists(logFile) then
 		if file.exists(prevLogFile) then file.delete(prevLogFile)
 		file.copy logFile, prevLogFile
+		file.delete logFile
 	end if
 
-	content.push "DSL: Starting up..."
-
-	file.writeLines logFile, content
+	f = file.open(logFile, "a")
+	f.write "DSL: Starting up..."
+	f.close
 end function
 
 recordStartup
 
 
 dsl.log = function(msg)
-	content = file.readLines(logFile)
-
-	content.push "WARNING - DSL: 'dsl.log' is deprecated, the new name is 'dsl.info'."
-	content.push "INFO at " + round(time, 3) + "s: " + msg
-
-	file.writeLines logFile, content
+	f = file.open(logFile, "a")
+	f.write char(13) + "WARNING - DSL: 'dsl.log' is deprecated, the new name is 'dsl.info'."
+	f.write char(13) + "INFO at " + round(time, 3) + "s: " + msg
+	f.close
 end function
 
 dsl.info = function(msg)
-	content = file.readLines(logFile)
-
-	content.push "INFO at " + round(time, 3) + "s: " + msg
-
-	file.writeLines logFile, content
+	f = file.open(logFile, "a")
+	f.write char(13) + "INFO at " + round(time, 3) + "s: " + msg
+	f.close
 end function
 
 dsl.warn = function(msg)
-	content = file.readLines(logFile)
-
-	content.push "WARNING at " + round(time, 3) + "s: " + msg
-
-	file.writeLines logFile, content
+	f = file.open(logFile, "a")
+	f.write char(13) + "WARNING at " + round(time, 3) + "s: " + msg
+	f.close
 end function
 
 dsl.error = function(msg)
-	content = file.readLines(logFile)
-
-	content.push "ERROR at " + round(time, 3) + "s: " + msg
-
-	file.writeLines logFile, content
+	f = file.open(logFile, "a")
+	f.write char(13) + "ERROR at " + round(time, 3) + "s: " + msg
+	f.close
 end function
 
 dsl.fatal = function(msg)
-	content = file.readLines(logFile)
+	f = file.open(logFile, "a")
+	f.write char(13) + "FATAL at " + round(time, 3) + "s: " + msg
+	f.close
 
-	content.push ("FATAL at " + round(time, 3) + "s: " + msg).upper
-
-	file.writeLines logFile, content
+	dsl.stop
 end function
