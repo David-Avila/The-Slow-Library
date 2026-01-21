@@ -40,7 +40,11 @@ dsl.StateMachine.addState = function(states)
 end function
 
 dsl.StateMachine.change = function(next)
-	newState = self.states[next]
+	if next isa string then
+		newState = self.states[next]
+	else
+		newState = self.states[next.name]
+	end if
 
 	if newState != null then
 		self.state.exit newState, self.owner
