@@ -12,8 +12,8 @@ dsl.disp.OFF = displayMode.off
 // Default displays
 globals.SOL = display(7) // Solid
 // display(6) - not used
-globals.GFX = display(5) // Sprite
-globals.SPD = display(4) // Pixel
+globals.GFX = display(5) // Pixel
+globals.SPD = display(4) // Sprite
 globals.TXT = display(3) // Text
 globals.UID = display(2) // UI
 globals.TRD = display(1) // Transitions
