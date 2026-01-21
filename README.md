@@ -133,6 +133,12 @@ Use these functions to log important messages to `log.txt`.
 ```
 dsl.log "Player spawned correctly"
 
+// `dsl.log` is deprecated, the new name is `dsl.info`
+// this change was made to keep a consistent naming
+// of the different logging levels
+
+dsl.info "Player spawned correctly"
+
 dsl.warn "Something is not working"
 
 dsl.error "There is definitly something wrong here"
