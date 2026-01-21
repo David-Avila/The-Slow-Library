@@ -15,6 +15,11 @@ dsl.newState = function(name)
 	return s
 end function
 
+dsl.newStateMachine = function(owner)
+	sm = new dsl.StateMachine
+	return sm.init(owner)
+end function
+
 dsl.StateMachine = {}
 dsl.StateMachine.owner = null
 dsl.StateMachine.state = null
