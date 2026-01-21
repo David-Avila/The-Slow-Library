@@ -1,5 +1,9 @@
 // Input system
 
+if not globals.hasIndex("dsl") then
+	globals.dsl = {}
+end if
+
 dsl.keys = {
 	"a": {"code": "a", "lastPressed": -1, "lastReleased": -1, "wasDown": 0, "index": 0, "state" : "up", "lastChecked": -1}, 
 	"b": {"code": "b", "lastPressed": -1, "lastReleased": -1, "wasDown": 0, "index": 1, "state" : "up", "lastChecked": -1}, 

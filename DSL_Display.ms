@@ -1,5 +1,10 @@
 // Display Managment
 import "listUtil"
+
+if not globals.hasIndex("dsl") then
+	globals.dsl = {}
+end if
+
 dsl.disp = {}
 
 dsl.disp.SPRITE = displayMode.sprite

@@ -1,5 +1,9 @@
 // Finite State Machine
 
+if not globals.hasIndex("dsl") then
+	globals.dsl = {}
+end if
+
 dsl.State = {}
 dsl.State.enter = function(prev, obj); end function
 dsl.State.update = function(obj); end function

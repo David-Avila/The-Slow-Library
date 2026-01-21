@@ -1,5 +1,9 @@
 // Sprite animation system
 
+if not globals.hasIndex("dsl") then
+	globals.dsl = {}
+end if
+
 dsl.anim = {}
 
 _anim = {}

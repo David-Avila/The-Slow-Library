@@ -1,6 +1,10 @@
 // Entity System
 import "listUtil"
 
+if not globals.hasIndex("dsl") then
+	globals.dsl = {}
+end if
+
 dsl.entt = {}
 
 dsl.entt.update = function(list)

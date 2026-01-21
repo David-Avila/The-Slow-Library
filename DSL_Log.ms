@@ -1,5 +1,9 @@
 // Logging system
 
+if not globals.hasIndex("dsl") then
+	globals.dsl = {}
+end if
+
 logFile = "log.txt"
 prevLogFile = "prev_log.txt"
 
@@ -18,7 +22,7 @@ end function
 
 recordStartup
 
-
+// DEPRECATED
 dsl.log = function(msg)
 	f = file.open(logFile, "a")
 	f.write char(13) + "WARNING - DSL: 'dsl.log' is deprecated, the new name is 'dsl.info'."
