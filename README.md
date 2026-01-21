@@ -3,16 +3,9 @@ This is a small personal library that I'm creating to speed up development of ga
 be a collection of functions and system, that help getting started with new projects. It is NOT meant to take control
 of the game loop, rendering nor any other important part of the development process.
 
-You can use the complete library or just the file you want. 
-
-**NOTES FOR SINGLE FILE USE**:
-If you don't use the library by importing `DSL.ms` and just want to use one of the modules, make sure to declare
-the variable `dsl` as global:
+You can use the complete library or just the file you want. Import `DSL` or any of the following modules.
 
 ```
-globals.dsl = {}
-
-// then you can import any of the stand alone files
 import "DSL_Log"
 import "DSL_Animations"
 import "DSL_Input"
