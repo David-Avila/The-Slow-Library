@@ -143,6 +143,10 @@ View those logs using `view "log.txt"` in Mini Micro, or your favorite text edit
 
 **NOTE**: The logging system overrides `prev_log.txt` with the content of `log.txt` and then replaces `log.txt` with the new logs, if you want to keep logs from previous runs use `file.copy "log.txt", "old_log.txt"` before running again. You can use any name you want for old logs, that's up to you.
 
+
+# Finite State Machine
+**WIP**
+
 # Entity Functions
 One function that you can use to handle basic entities.
 
