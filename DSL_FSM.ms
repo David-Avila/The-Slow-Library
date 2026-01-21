@@ -9,7 +9,7 @@ dsl.State.enter = function(prev, obj); end function
 dsl.State.update = function(obj); end function
 dsl.State.exit = function(next, obj); end function
 
-dsl.createState = function(name)
+dsl.newState = function(name)
 	s = new dsl.State
 	s.name = name
 	return s
