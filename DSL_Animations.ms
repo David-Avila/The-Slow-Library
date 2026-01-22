@@ -126,8 +126,6 @@ dsl.anim.change = function(sprite, animation, frame=0)
 		sprite._currAnim.time = 0
 		sprite._currAnim.done = false
 
-
-
 		sprite._currAnim = animation
 		sprite._currAnim.done = false
 
