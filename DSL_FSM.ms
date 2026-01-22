@@ -41,6 +41,25 @@ dsl.addFSM = function(obj)
 		self[self.state].enter prev, self
 	end function
 
+	obj.inState = function(state)
+		if state isa string then
+			return self.state == state
+		else if state isa list then
+			onState = false
+
+			for st in state
+				if self.state == st then
+					onState = true
+					break
+				end if 
+			end for
+
+			return onState
+		else
+			return false
+		end if
+	end function
+
 	obj.clone = function
 		clone = {} + self
 
