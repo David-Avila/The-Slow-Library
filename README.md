@@ -64,7 +64,7 @@ For instance:
 A file called `player idle.png` or `player-idle.png` will be stored as `player_idle`, and can be accessed with `dsl.images.player_idle`. That also applies to sound effects and music.
 
 # Animation System
-`DSL` counts with a small yet solid animation system. With just two functions you can create an animate any sprite.
+`DSL` counts with a small yet solid animation system. With these functions you can create an animate any sprite.
 
 ```
 // This function returns an animation that you can use with `dsl.anim.animate`
@@ -72,7 +72,9 @@ dsl.anim.create(spriteSheetImage, individualFrameWidth, animationSpeed)
 
 // animationSpeed's default value is 10
 
-dsl.anim.animate spriteToAnimate, animation
+dsl.anim.change sprite, animation
+
+dsl.anim.animate spriteToAnimate
 ```
 
 Check the next example to see how it works.
