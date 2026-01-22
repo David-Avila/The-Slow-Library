@@ -101,5 +101,4 @@ dsl.anim.animate = function(sprite)
 	end if
 
 	sprite.image = sprite._currAnim.frames[sprite._currAnim.frame]
-	end if
 end function
