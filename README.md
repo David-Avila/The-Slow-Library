@@ -9,6 +9,7 @@ You can use the complete library or just the file you want. Import `DSL` or any 
 import "DSL_Log"
 import "DSL_Animations"
 import "DSL_Input"
+import "DSL_FSM"
 import "DSL_Display"
 import "DSL_Debug" // WIP
 import "DSL_Entity"
