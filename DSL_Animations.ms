@@ -9,10 +9,12 @@ dsl.anim = {}
 _anim = {}
 _anim.frames = null
 _anim.speed = 10
+_anim.loop = false
+_anim.done = false
 _anim.frame = 0
 
 // this function assumes that the spriteSheet stores sprites horizontaly
-dsl.anim.create = function(spriteSheet, width, speed=10)
+dsl.anim.create = function(spriteSheet, width, speed=10, loop=false)
 	l = globals.hasIndex("DSL_Log")
 
 	if not spriteSheet isa Image then
@@ -49,6 +51,7 @@ dsl.anim.create = function(spriteSheet, width, speed=10)
 	a = new _anim
 	a.speed = speed
 	a.frames = []
+	a.loop = loop
 
 	height = spriteSheet.height
 	amount = spriteSheet.width / width
@@ -60,7 +63,18 @@ dsl.anim.create = function(spriteSheet, width, speed=10)
 	return a
 end function
 
-dsl.anim.animate = function(sprite, animation)
+dsl.anim.isDone = function(sprite)
+	return sprite._currAnim.done
+end function
+
+dsl.anim.change = function(sprite, animation, frame=0)
+	sprite["_currAnim"] = animation
+	sprite._currAnim.frame = frame
+	sprite._currAnim.done = false
+	sprite._currAnim.time = sprite._currAnim.speed * frame
+end function
+
+dsl.anim.animate = function(sprite)
 	if sprite == null then
 		if globals.hasIndex("DSL_Log") then
 			dsl.error "DSL: The sprite supplied to dsl.anim.animate is null, are you sure is not deleted?"
@@ -68,12 +82,24 @@ dsl.anim.animate = function(sprite, animation)
 		return
 	end if
 
-	if animation == null or not animation isa _anim then
+	if sprite._currAnim == null or not sprite._currAnim isa _anim then
 		if globals.hasIndex("DSL_Log") then
 			dsl.error "DSL: The animation supplied to dsl.anim.animate is null or not a valid animation."
 		end if
 		return
 	end if
 
-	sprite.image = animation.frames[time * animation.speed % animation.frames.len]
+	// TODO Remove dependency from `dsl`
+	sprite._currAnim.time += dsl.dt
+
+	if not sprite._currentAnim.done then
+		sprite._currAnim.frame = sprite._currAnim.time * sprite._currAnim.speed % sprite._currAnim.frames.len
+
+		if sprite._currAnim.frame >= sprite._currAnim.frames.len-1 then
+			sprite._currAnim.done = true
+		end if
+	end if
+
+	sprite.image = sprite._currAnim.frames[sprite._currAnim.frame]
+	end if
 end function
