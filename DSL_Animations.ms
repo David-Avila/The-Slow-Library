@@ -92,7 +92,7 @@ dsl.anim.animate = function(sprite)
 	// TODO Remove dependency from `dsl`
 	sprite._currAnim.time += dsl.dt
 
-	if not sprite._currentAnim.done then
+	if not sprite._currAnim.done then
 		sprite._currAnim.frame = sprite._currAnim.time * sprite._currAnim.speed % sprite._currAnim.frames.len
 
 		if sprite._currAnim.frame >= sprite._currAnim.frames.len-1 then
