@@ -145,7 +145,63 @@ View those logs using `view "log.txt"` in Mini Micro, or your favorite text edit
 
 
 # Finite State Machine
-**WIP**
+**Documentation will be added soon**
+
+For now, this is an example of how it's used:
+```
+import "DSL"
+
+Base = new Sprite
+Base.image = file.loadImage("/sys/pics/Wumpus.png")
+Base.x = 480; Base.y = 320
+
+dsl.addFSM Base
+
+Base.addState "idle"
+Base.addState "walk"
+
+Base.idle.update = function(obj)
+	if dsl.keyPressed("c") then
+		obj.changeState "walk"
+	end if
+end function
+
+Base.walk.update = function(obj)
+	if dsl.keyPressed("c") then
+		obj.changeState "idle"
+	end if
+end function
+
+Base.update = function
+	self.updateStates
+end function
+
+ins = Base.clone
+ins.idle.enter = function(prev, obj)
+	print "Entering idle state on instance"
+end function
+
+ins.walk.enter = function(prev, obj)
+	print "Entering walk state on instance"
+end function
+
+SPD.add ins
+
+while dsl.running
+	dsl.update
+
+	if dsl.keyPressed("escape") then
+		dsl.stop
+	end if
+
+	ins.update
+
+	yield
+end while
+
+SPD.remove ins
+```
+
 
 # Entity Functions
 One function that you can use to handle basic entities.
