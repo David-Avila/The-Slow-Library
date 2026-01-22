@@ -95,7 +95,7 @@ dsl.anim.animate = function(sprite)
 	if not sprite._currAnim.done then
 		sprite._currAnim.frame = sprite._currAnim.time * sprite._currAnim.speed % sprite._currAnim.frames.len
 
-		if sprite._currAnim.frame >= sprite._currAnim.frames.len-1 then
+		if sprite._currAnim.frame >= sprite._currAnim.frames.len-1 and not sprite._currAnim.loop then
 			sprite._currAnim.done = true
 		end if
 	end if
