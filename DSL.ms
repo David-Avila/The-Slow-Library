@@ -93,7 +93,11 @@ end function
 
 dsl.images = {}
 dsl.importImages = function(folder="")
-	if folder == "" then folder = pwd
+	if folder == "" then 
+		folder = pwd
+	else if not folder[0] == "/" then
+		folder = file.child(pwd, folder)
+	end if
 
 	filesFound = dsl._scanFolder("png", folder)
 
@@ -104,7 +108,11 @@ end function
 
 dsl.sounds = {}
 dsl.importSounds = function(folder="")
-	if folder == "" then folder = pwd
+	if folder == "" then 
+		folder = pwd
+	else if not folder[0] == "/" then
+		folder = file.child(pwd, folder)
+	end if
 
 	filesFound = dsl._scanFolder("wav", folder)
 	filesFound += dsl._scanFolder("ogg", folder)
