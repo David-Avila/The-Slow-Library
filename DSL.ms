@@ -18,6 +18,7 @@ checkImport "DSL_Entity"
 checkImport "DSL_Animations"
 checkImport "DSL_Log"
 checkImport "DSL_FSM"
+import "stringUtil"
 
 dsl.running = true
 
@@ -69,31 +70,21 @@ dsl.newSprite = function(imgOrPath, x=0, y=0, scale=1)
 	return s
 end function
 
-dsl._scanFolder = function(path, ext)
+dsl._scanFolder = function(ext, folder)
 	filesFound = []
 
-	for f in file.children(path)
-		fileOrFolder = path + "/" + f
+	for fileName in file.children(folder)
+		filePath = file.child(folder, fileName)
 
-		if not file.info(fileOrFolder).isDirectory then
-			fileName = file.name(fileOrFolder)
+		if file.info(filePath).isDirectory then
+			filesFound += dsl._scanFolder(ext, filePath)
+		else if fileName isa string then
+			if fileName.endsWith(ext) then
+				fileName.replace " ", "_"
+				fileName.replace "-", "_"
 
-			if fileName.indexOf(".") == null then continue
-
-			fN = fileName.split(".")
-
-			fN[0] = fN[0].replace(" ", "_")
-			fN[0] = fN[0].replace("-", "_")
-
-			if fN[1] == ext then
-				filesFound.push {"name": fN[0], "path": fileOrFolder}
+				filesFound.push {"name": fileName - ("." + ext), "path": filePath}
 			end if
-		else
-			imgs = dsl._scanFolder(fileOrFolder, ext)
-
-			for ff in imgs
-				filesFound.push ff
-			end for
 		end if
 	end for
 
@@ -102,13 +93,9 @@ end function
 
 dsl.images = {}
 dsl.importImages = function(folder="")
-	if folder == "" then
-		path = pwd
-	else
-		path = pwd + "/" + folder
-	end if
+	if folder == "" then folder = pwd
 
-	filesFound = dsl._scanFolder(path, "png")
+	filesFound = dsl._scanFolder("png", folder)
 
 	for f in filesFound
 		dsl.images[f.name] = file.loadImage(f.path)
@@ -116,14 +103,11 @@ dsl.importImages = function(folder="")
 end function
 
 dsl.sounds = {}
-dsl.importSounds = function(folder)
-	if folder == "" then
-		path = pwd
-	else
-		path = pwd + "/" + folder
-	end if
+dsl.importSounds = function(folder="")
+	if folder == "" then folder = pwd
 
-	filesFound = dsl._scanFolder(path, "wav")
+	filesFound = dsl._scanFolder("wav", folder)
+	filesFound += dsl._scanFolder("ogg", folder)
 
 	for f in filesFound
 		dsl.sounds[f.name] = file.loadSound(f.path)
