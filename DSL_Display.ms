@@ -7,12 +7,9 @@ end if
 
 dsl.disp = {}
 
-dsl.disp.SPRITE = displayMode.sprite
-dsl.disp.PIXEL = displayMode.pixel
-dsl.disp.TEXT = displayMode.text
-dsl.disp.SOLID = displayMode.solidColor
-dsl.disp.TILE = displayMode.tile
-dsl.disp.OFF = displayMode.off
+display(2).mode = displayMode.sprite
+display(1).mode = displayMode.sprite
+display(0).mode = displayMode.sprite
 
 // Default displays
 globals.SOL = display(7) // Solid
@@ -24,11 +21,6 @@ globals.UID = display(2) // UI
 globals.TRD = display(1) // Transitions
 globals.TOD = display(0) // Top display
 
-// Modes
-UID.mode = dsl.disp.SPRITE
-TRD.mode = dsl.disp.SPRITE
-TOD.mode = dsl.disp.SPRITE
-
 // Helper functions
 SPD.add = function(sprite)
 	SPD.sprites.push sprite
@@ -36,4 +28,10 @@ end function
 
 SPD.remove = function(sprite)
 	SPD.sprites.removeVal sprite
+end function
+
+SPD.wipe = function
+	while SPD.sprites.len > 0
+		SPD.remove SPD.sprites[0]
+	end while
 end function
