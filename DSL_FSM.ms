@@ -22,8 +22,6 @@ dsl.addFSM = function(obj)
 		s = new dsl.state
 		s.name = name
 		self[name] = s
-
-		if self.state == null then self.state = name
 	end function
 
 	obj.updateStates = function
@@ -31,6 +29,8 @@ dsl.addFSM = function(obj)
 	end function
 
 	obj.changeState = function(next)
+		if self.state == next then return
+		
 		if self.state != null then
 			self[self.state].exit next, self
 		end if
