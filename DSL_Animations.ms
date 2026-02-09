@@ -157,7 +157,7 @@ dsl.anim.animate = function(sprite)
 	end if
 
 
-	if not sprite._currAnim.done then
+	if not sprite._currAnim.done or sprite._currAnim.loop then
 		// TODO Remove dependency from `dsl`
 		sprite._currAnim.time += dsl.dt
 
@@ -174,6 +174,7 @@ dsl.anim.animate = function(sprite)
 
 		sprite.image = sprite._currAnim.frames[currFrame]
 		
+		sprite._currAnim.done = false
 		if currFrame >= lastFrame and (not sprite._currAnim.loop) then
 			sprite._currAnim.done = true
 		end if	
