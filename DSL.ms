@@ -56,6 +56,27 @@ dsl.update = function
 	key.clear
 end function
 
+// Save all modules to a single file
+dsl.build = function
+	files = []
+	files.push "DSL.ms"
+	files.push "DSL_Debug.ms"
+	files.push "DSL_Display.ms"
+	files.push "DSL_Input.ms"
+	files.push "DSL_Entity.ms"
+	files.push "DSL_Animations.ms"
+	files.push "DSL_Log.ms"
+	files.push "DSL_FSM.ms"
+
+	cont = []
+
+	for f in files
+		cont += file.readLines(f)
+	end for 
+
+	file.writeLines "DSL_Lib.ms", cont
+end function
+
 dsl.newSprite = function(imgOrPath, x=0, y=0, scale=1)
 	s = new Sprite
 	if imgOrPath isa string then

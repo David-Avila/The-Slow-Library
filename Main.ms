@@ -1,4 +1,4 @@
-import "DSL"
+import "DSL_Lib"
 
 while dsl.running
 	dsl.update
