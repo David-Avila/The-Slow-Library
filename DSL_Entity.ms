@@ -1,10 +1,4 @@
 // Entity System
-import "listUtil"
-
-if not globals.hasIndex("dsl") then
-	globals.dsl = {}
-end if
-
 dsl.entt = {}
 
 dsl.entt.update = function(list)
@@ -15,9 +9,7 @@ dsl.entt.update = function(list)
 			if e.hasIndex("update") then
 				e.update
 			else
-				if globals.hasIndex("DSL_Log") then
-					dsl.error "DSL: The entity you are updating with dsl.entt.update does not contains an 'update' function. Make sure there is not a typo in the declaration."
-				end if
+				dsl.error "DSL: The entity you are updating with dsl.entt.update does not contains an 'update' function. Make sure there is not a typo in the declaration."
 			end if
 		else
 			toDelete.push e

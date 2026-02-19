@@ -1,24 +1,8 @@
+import "stringUtil"
+import "listUtil"
+
 // Game loop
 globals.dsl = {}
-
-checkImport = function(fileName)
-	f = fileName + ".ms"
-
-	if file.exists(f) then
-		import fileName
-		globals[fileName] = fileName
-	end if
-end function
-
-// Library features
-checkImport "DSL_Debug"
-checkImport "DSL_Display"
-checkImport "DSL_Input"
-checkImport "DSL_Entity"
-checkImport "DSL_Animations"
-checkImport "DSL_Log"
-checkImport "DSL_FSM"
-import "stringUtil"
 
 dsl.running = true
 
@@ -58,6 +42,11 @@ end function
 
 // Save all modules to a single file
 dsl.build = function
+	if outer.hasIndex("DSL_LIB") then
+		dsl.warn "DSL: Trying to build an already built library."
+		return
+	end if
+
 	files = []
 	files.push "DSL.ms"
 	files.push "DSL_Debug.ms"
@@ -68,10 +57,12 @@ dsl.build = function
 	files.push "DSL_Log.ms"
 	files.push "DSL_FSM.ms"
 
-	cont = []
+	cont = "DSL_LIB = true // Do not delete this line"
 
 	for f in files
-		cont += file.readLines(f)
+		for l in file.readLines(f)
+		cont += char(10) + l
+		end for
 	end for 
 
 	file.writeLines "DSL_Lib.ms", cont

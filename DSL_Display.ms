@@ -1,14 +1,10 @@
 // Display Managment
-import "listUtil"
-
-if not globals.hasIndex("dsl") then
-	globals.dsl = {}
-end if
-
 dsl.disp = {}
 
 SpriteDisp = new SpriteDisplay
+SpriteDisp.scale = 1
 SpriteDisp.add = function(sprite)
+	sprite.scale = self.scale
 	self.sprites.push sprite
 end function
 
@@ -18,7 +14,7 @@ end function
 
 SpriteDisp.wipe = function
 	while self.sprites.len > 0
-		self.remove self.sprites[0]
+		self.sprites.pop
 	end while
 end function
 
@@ -42,17 +38,17 @@ SpriteDisp.ysort = function
 end function
 
 display(2).mode = displayMode.sprite
-display(1).mode = displayMode.sprite
+display(1).mode = displayMode.pixel
 display(0).mode = displayMode.sprite
 
 // Default displays
-globals.SOL = display(7) // Solid
-// display(6) - not used
-globals.GFX = display(5) // Pixel
+globals.SOL = display(7)
+globals.GFX = display(5)
 globals.SPD = new SpriteDisp
-globals.TXT = display(3) // Text
-globals.UID = display(2) // UI
-globals.TRD = display(1) // Transitions
-globals.TOD = display(0) // Top display
+globals.TXT = display(3)
+globals.UID = display(2)
+globals.TRD = display(1)
+globals.TOD = display(0)
 
 SPD.install 4
+TRD.clear

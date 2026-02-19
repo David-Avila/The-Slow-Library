@@ -1,9 +1,4 @@
 // Sprite animation system
-
-if not globals.hasIndex("dsl") then
-	globals.dsl = {}
-end if
-
 dsl.anim = {}
 
 _anim = {}
@@ -16,36 +11,26 @@ _anim.frame = 0
 
 // this function assumes that the spriteSheet stores sprites horizontaly
 dsl.anim.create = function(spriteSheet, width, speed=10, loop=true)
-	l = globals.hasIndex("DSL_Log")
-
 	if not spriteSheet isa Image then
-		if l then
-			dsl.error "DSL: The 'sprite sheet' supplied to dsl.anim.create is null or not an image."
-			dsl.error "DSL: Make sure is loaded correctly. Passed sprite sheet value: " + spriteSheet
-		end if
-
+		dsl.error "DSL: The 'sprite sheet' supplied to dsl.anim.create is null or not an image."
+		dsl.error "DSL: Make sure is loaded correctly. Passed sprite sheet value: " + spriteSheet
+		
 		return null
 	end if
 
 	if not width isa number then
-		if l then
-			dsl.error "DSL: The 'width' supplied to dsl.anim.create is null or not an number."
-			dsl.error "DSL: Passed 'width' value: " + width
-		end if
-
+		dsl.error "DSL: The 'width' supplied to dsl.anim.create is null or not an number."
+		dsl.error "DSL: Passed 'width' value: " + width
+	
 		return null
 	else if width == 0 then
-		if l then
-			dsl.error "DSL: The 'width' supplied to dsl.anim.create is 0. Only allowed possitive values greater than 0"
-		end if
+		dsl.error "DSL: The 'width' supplied to dsl.anim.create is 0. Only allowed possitive values greater than 0"
 	end if
 
 	if not speed isa number then
-		if l then
-			dsl.error "DSL: The 'speed' supplied to dsl.anim.create is null or not an number."
-			dsl.error "DSL: Passed 'speed' value: " + speed
-		end if
-
+		dsl.error "DSL: The 'speed' supplied to dsl.anim.create is null or not an number."
+		dsl.error "DSL: Passed 'speed' value: " + speed
+		
 		return null
 	end if
 
@@ -67,35 +52,25 @@ dsl.anim.create = function(spriteSheet, width, speed=10, loop=true)
 end function
 
 dsl.anim.createReverse = function(spriteSheet, width, speed=10, loop=true)
-	l = globals.hasIndex("DSL_Log")
-
 	if not spriteSheet isa Image then
-		if l then
-			dsl.error "DSL: The 'sprite sheet' supplied to dsl.anim.create is null or not an image."
-			dsl.error "DSL: Make sure is loaded correctly. Passed sprite sheet value: " + spriteSheet
-		end if
-
+		dsl.error "DSL: The 'sprite sheet' supplied to dsl.anim.create is null or not an image."
+		dsl.error "DSL: Make sure is loaded correctly. Passed sprite sheet value: " + spriteSheet
+	
 		return null
 	end if
 
 	if not width isa number then
-		if l then
-			dsl.error "DSL: The 'width' supplied to dsl.anim.create is null or not an number."
-			dsl.error "DSL: Passed 'width' value: " + width
-		end if
-
+		dsl.error "DSL: The 'width' supplied to dsl.anim.create is null or not an number."
+		dsl.error "DSL: Passed 'width' value: " + width
+		
 		return null
 	else if width == 0 then
-		if l then
-			dsl.error "DSL: The 'width' supplied to dsl.anim.create is 0. Only allowed possitive values greater than 0"
-		end if
+		dsl.error "DSL: The 'width' supplied to dsl.anim.create is 0. Only allowed possitive values greater than 0"
 	end if
 
 	if not speed isa number then
-		if l then
-			dsl.error "DSL: The 'speed' supplied to dsl.anim.create is null or not an number."
-			dsl.error "DSL: Passed 'speed' value: " + speed
-		end if
+		dsl.error "DSL: The 'speed' supplied to dsl.anim.create is null or not an number."
+		dsl.error "DSL: Passed 'speed' value: " + speed
 
 		return null
 	end if
@@ -143,16 +118,12 @@ end function
 
 dsl.anim.animate = function(sprite)
 	if sprite == null then
-		if globals.hasIndex("DSL_Log") then
-			dsl.error "DSL: The sprite supplied to dsl.anim.animate is null, are you sure is not deleted?"
-		end if
+		dsl.error "DSL: The sprite supplied to dsl.anim.animate is null, are you sure is not deleted?"
 		return
 	end if
 
 	if sprite._currAnim == null or not sprite._currAnim isa _anim then
-		if globals.hasIndex("DSL_Log") then
-			dsl.error "DSL: The animation supplied to dsl.anim.animate is null or not a valid animation."
-		end if
+		dsl.error "DSL: The animation supplied to dsl.anim.animate is null or not a valid animation."
 		return
 	end if
 

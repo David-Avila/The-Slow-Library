@@ -1,3 +1,4 @@
+// Finite State Machine
 dsl.fsm = {}
 
 dsl.state = {}

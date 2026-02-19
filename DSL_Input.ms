@@ -1,9 +1,4 @@
 // Input system
-
-if not globals.hasIndex("dsl") then
-	globals.dsl = {}
-end if
-
 dsl.keys = {
 	"a": {"code": "a", "lastPressed": -1, "lastReleased": -1, "wasDown": 0, "index": 0, "state" : "up", "lastChecked": -1}, 
 	"b": {"code": "b", "lastPressed": -1, "lastReleased": -1, "wasDown": 0, "index": 1, "state" : "up", "lastChecked": -1}, 
@@ -196,7 +191,6 @@ dsl.keys = {
 	"joystick 4 button 15": {"code": "joystick 4 button 15", "lastPressed": -1, "lastReleased": -1, "wasDown": 0, "index": 188, "state" : "up", "lastChecked": -1}}
 
 dsl.checkKeyState = function(k)
-
 	if  dsl.keys[k].lastChecked == dsl.frameCount then 
 		return dsl.keys[k].state
 	end if
@@ -223,9 +217,7 @@ end function
 dsl.keyPressed = function(k)
 
 	if key.keyNames.indexOf(k) == null then
-		if globals.hasIndex("DSL_Log") then
-			dsl.error "DSL: Key passed to 'dsl.keyPressed' does not exists. Key Passed: " + k
-		end if
+		dsl.error "DSL: Key passed to 'dsl.keyPressed' does not exists. Key Passed: " + k
 
 		return null
 	end if
@@ -237,10 +229,8 @@ end function
 dsl.keyDown = function(k)
 
 	if key.keyNames.indexOf(k) == null then
-		if globals.hasIndex("DSL_Log") then
-			dsl.error "DSL: Key passed to 'dsl.keyDown' does not exists. Key Passed: " + k
-		end if
-
+		dsl.error "DSL: Key passed to 'dsl.keyDown' does not exists. Key Passed: " + k
+	
 		return null
 	end if
 
@@ -251,10 +241,8 @@ end function
 dsl.keyReleased = function(k)
 
 	if key.keyNames.indexOf(k) == null then
-		if globals.hasIndex("DSL_Log") then
-			dsl.error "DSL: Key passed to 'dsl.keyReleased' does not exists. Key Passed: " + k
-		end if
-
+		dsl.error "DSL: Key passed to 'dsl.keyReleased' does not exists. Key Passed: " + k
+		
 		return null
 	end if
 
@@ -265,10 +253,8 @@ end function
 dsl.keyUp = function(k)
 
 	if key.keyNames.indexOf(k) == null then
-		if globals.hasIndex("DSL_Log") then
-			dsl.error "DSL: Key passed to 'dsl.keyUp' does not exists. Key Passed: " + k
-		end if
-
+		dsl.error "DSL: Key passed to 'dsl.keyUp' does not exists. Key Passed: " + k
+		
 		return null
 	end if
 
@@ -278,19 +264,15 @@ end function
 
 dsl.axis = function(k1, k2="")
 	if not k1 isa string then
-		if globals.hasIndex("DSL_Log") then
-			dsl.error "DSL: First axis/key passed to 'dsl.axis' is not a string. Axis/Key Passed: " + k1
-		end if
-
+		dsl.error "DSL: First axis/key passed to 'dsl.axis' is not a string. Axis/Key Passed: " + k1
+		
 		return null
 	end if
 
 	if k2 != "" then
 		if not k2 isa string then
-			if globals.hasIndex("DSL_Log") then
-				dsl.error "DSL: Second key passed to 'dsl.axis' is not a string. Key Passed: " + k2
-			end if
-
+			dsl.error "DSL: Second key passed to 'dsl.axis' is not a string. Key Passed: " + k2
+			
 			return null
 		end if
 

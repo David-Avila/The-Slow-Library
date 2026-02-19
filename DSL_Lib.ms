@@ -1,8 +1,9 @@
-// Game loop
-globals.dsl = {}
-
+DSL_LIB = true // Do not delete this line
 import "stringUtil"
 import "listUtil"
+
+// Game loop
+globals.dsl = {}
 
 dsl.running = true
 
@@ -42,6 +43,11 @@ end function
 
 // Save all modules to a single file
 dsl.build = function
+	if outer.hasIndex("DSL_LIB") then
+		dsl.warn "DSL: Trying to build an already built library."
+		return
+	end if
+
 	files = []
 	files.push "DSL.ms"
 	files.push "DSL_Debug.ms"
@@ -52,10 +58,12 @@ dsl.build = function
 	files.push "DSL_Log.ms"
 	files.push "DSL_FSM.ms"
 
-	cont = []
+	cont = "DSL_LIB = true // Do not delete this line"
 
 	for f in files
-		cont += file.readLines(f)
+		for l in file.readLines(f)
+		cont += char(10) + l
+		end for
 	end for 
 
 	file.writeLines "DSL_Lib.ms", cont
@@ -127,25 +135,17 @@ dsl.importSounds = function(folder="")
 	end for
 end function
 // Debug system
-
-if not globals.hasIndex("dsl") then
-	globals.dsl = {}
-end if
-
 dsl.debug = {}
 
 dsl.debug.enabled = false
 
 // Display Managment
-
-if not globals.hasIndex("dsl") then
-	globals.dsl = {}
-end if
-
 dsl.disp = {}
 
 SpriteDisp = new SpriteDisplay
+SpriteDisp.scale = 1
 SpriteDisp.add = function(sprite)
+	sprite.scale = self.scale
 	self.sprites.push sprite
 end function
 
@@ -155,7 +155,7 @@ end function
 
 SpriteDisp.wipe = function
 	while self.sprites.len > 0
-		self.remove self.sprites[0]
+		self.sprites.pop
 	end while
 end function
 
@@ -179,26 +179,21 @@ SpriteDisp.ysort = function
 end function
 
 display(2).mode = displayMode.sprite
-display(1).mode = displayMode.sprite
+display(1).mode = displayMode.pixel
 display(0).mode = displayMode.sprite
 
 // Default displays
-globals.SOL = display(7) // Solid
-// display(6) - not used
-globals.GFX = display(5) // Pixel
+globals.SOL = display(7)
+globals.GFX = display(5)
 globals.SPD = new SpriteDisp
-globals.TXT = display(3) // Text
-globals.UID = display(2) // UI
-globals.TRD = display(1) // Transitions
-globals.TOD = display(0) // Top display
+globals.TXT = display(3)
+globals.UID = display(2)
+globals.TRD = display(1)
+globals.TOD = display(0)
 
 SPD.install 4
+TRD.clear
 // Input system
-
-if not globals.hasIndex("dsl") then
-	globals.dsl = {}
-end if
-
 dsl.keys = {
 	"a": {"code": "a", "lastPressed": -1, "lastReleased": -1, "wasDown": 0, "index": 0, "state" : "up", "lastChecked": -1}, 
 	"b": {"code": "b", "lastPressed": -1, "lastReleased": -1, "wasDown": 0, "index": 1, "state" : "up", "lastChecked": -1}, 
@@ -391,7 +386,6 @@ dsl.keys = {
 	"joystick 4 button 15": {"code": "joystick 4 button 15", "lastPressed": -1, "lastReleased": -1, "wasDown": 0, "index": 188, "state" : "up", "lastChecked": -1}}
 
 dsl.checkKeyState = function(k)
-
 	if  dsl.keys[k].lastChecked == dsl.frameCount then 
 		return dsl.keys[k].state
 	end if
@@ -418,9 +412,7 @@ end function
 dsl.keyPressed = function(k)
 
 	if key.keyNames.indexOf(k) == null then
-		if globals.hasIndex("DSL_Log") then
-			dsl.error "DSL: Key passed to 'dsl.keyPressed' does not exists. Key Passed: " + k
-		end if
+		dsl.error "DSL: Key passed to 'dsl.keyPressed' does not exists. Key Passed: " + k
 
 		return null
 	end if
@@ -432,10 +424,8 @@ end function
 dsl.keyDown = function(k)
 
 	if key.keyNames.indexOf(k) == null then
-		if globals.hasIndex("DSL_Log") then
-			dsl.error "DSL: Key passed to 'dsl.keyDown' does not exists. Key Passed: " + k
-		end if
-
+		dsl.error "DSL: Key passed to 'dsl.keyDown' does not exists. Key Passed: " + k
+	
 		return null
 	end if
 
@@ -446,10 +436,8 @@ end function
 dsl.keyReleased = function(k)
 
 	if key.keyNames.indexOf(k) == null then
-		if globals.hasIndex("DSL_Log") then
-			dsl.error "DSL: Key passed to 'dsl.keyReleased' does not exists. Key Passed: " + k
-		end if
-
+		dsl.error "DSL: Key passed to 'dsl.keyReleased' does not exists. Key Passed: " + k
+		
 		return null
 	end if
 
@@ -460,10 +448,8 @@ end function
 dsl.keyUp = function(k)
 
 	if key.keyNames.indexOf(k) == null then
-		if globals.hasIndex("DSL_Log") then
-			dsl.error "DSL: Key passed to 'dsl.keyUp' does not exists. Key Passed: " + k
-		end if
-
+		dsl.error "DSL: Key passed to 'dsl.keyUp' does not exists. Key Passed: " + k
+		
 		return null
 	end if
 
@@ -473,19 +459,15 @@ end function
 
 dsl.axis = function(k1, k2="")
 	if not k1 isa string then
-		if globals.hasIndex("DSL_Log") then
-			dsl.error "DSL: First axis/key passed to 'dsl.axis' is not a string. Axis/Key Passed: " + k1
-		end if
-
+		dsl.error "DSL: First axis/key passed to 'dsl.axis' is not a string. Axis/Key Passed: " + k1
+		
 		return null
 	end if
 
 	if k2 != "" then
 		if not k2 isa string then
-			if globals.hasIndex("DSL_Log") then
-				dsl.error "DSL: Second key passed to 'dsl.axis' is not a string. Key Passed: " + k2
-			end if
-
+			dsl.error "DSL: Second key passed to 'dsl.axis' is not a string. Key Passed: " + k2
+			
 			return null
 		end if
 
@@ -498,11 +480,6 @@ dsl.axis = function(k1, k2="")
 	end if
 end function
 // Entity System
-
-if not globals.hasIndex("dsl") then
-	globals.dsl = {}
-end if
-
 dsl.entt = {}
 
 dsl.entt.update = function(list)
@@ -513,9 +490,7 @@ dsl.entt.update = function(list)
 			if e.hasIndex("update") then
 				e.update
 			else
-				if globals.hasIndex("DSL_Log") then
-					dsl.error "DSL: The entity you are updating with dsl.entt.update does not contains an 'update' function. Make sure there is not a typo in the declaration."
-				end if
+				dsl.error "DSL: The entity you are updating with dsl.entt.update does not contains an 'update' function. Make sure there is not a typo in the declaration."
 			end if
 		else
 			toDelete.push e
@@ -531,11 +506,6 @@ dsl.entt.update = function(list)
 end function
 
 // Sprite animation system
-
-if not globals.hasIndex("dsl") then
-	globals.dsl = {}
-end if
-
 dsl.anim = {}
 
 _anim = {}
@@ -548,36 +518,26 @@ _anim.frame = 0
 
 // this function assumes that the spriteSheet stores sprites horizontaly
 dsl.anim.create = function(spriteSheet, width, speed=10, loop=true)
-	l = globals.hasIndex("DSL_Log")
-
 	if not spriteSheet isa Image then
-		if l then
-			dsl.error "DSL: The 'sprite sheet' supplied to dsl.anim.create is null or not an image."
-			dsl.error "DSL: Make sure is loaded correctly. Passed sprite sheet value: " + spriteSheet
-		end if
-
+		dsl.error "DSL: The 'sprite sheet' supplied to dsl.anim.create is null or not an image."
+		dsl.error "DSL: Make sure is loaded correctly. Passed sprite sheet value: " + spriteSheet
+		
 		return null
 	end if
 
 	if not width isa number then
-		if l then
-			dsl.error "DSL: The 'width' supplied to dsl.anim.create is null or not an number."
-			dsl.error "DSL: Passed 'width' value: " + width
-		end if
-
+		dsl.error "DSL: The 'width' supplied to dsl.anim.create is null or not an number."
+		dsl.error "DSL: Passed 'width' value: " + width
+	
 		return null
 	else if width == 0 then
-		if l then
-			dsl.error "DSL: The 'width' supplied to dsl.anim.create is 0. Only allowed possitive values greater than 0"
-		end if
+		dsl.error "DSL: The 'width' supplied to dsl.anim.create is 0. Only allowed possitive values greater than 0"
 	end if
 
 	if not speed isa number then
-		if l then
-			dsl.error "DSL: The 'speed' supplied to dsl.anim.create is null or not an number."
-			dsl.error "DSL: Passed 'speed' value: " + speed
-		end if
-
+		dsl.error "DSL: The 'speed' supplied to dsl.anim.create is null or not an number."
+		dsl.error "DSL: Passed 'speed' value: " + speed
+		
 		return null
 	end if
 
@@ -599,35 +559,25 @@ dsl.anim.create = function(spriteSheet, width, speed=10, loop=true)
 end function
 
 dsl.anim.createReverse = function(spriteSheet, width, speed=10, loop=true)
-	l = globals.hasIndex("DSL_Log")
-
 	if not spriteSheet isa Image then
-		if l then
-			dsl.error "DSL: The 'sprite sheet' supplied to dsl.anim.create is null or not an image."
-			dsl.error "DSL: Make sure is loaded correctly. Passed sprite sheet value: " + spriteSheet
-		end if
-
+		dsl.error "DSL: The 'sprite sheet' supplied to dsl.anim.create is null or not an image."
+		dsl.error "DSL: Make sure is loaded correctly. Passed sprite sheet value: " + spriteSheet
+	
 		return null
 	end if
 
 	if not width isa number then
-		if l then
-			dsl.error "DSL: The 'width' supplied to dsl.anim.create is null or not an number."
-			dsl.error "DSL: Passed 'width' value: " + width
-		end if
-
+		dsl.error "DSL: The 'width' supplied to dsl.anim.create is null or not an number."
+		dsl.error "DSL: Passed 'width' value: " + width
+		
 		return null
 	else if width == 0 then
-		if l then
-			dsl.error "DSL: The 'width' supplied to dsl.anim.create is 0. Only allowed possitive values greater than 0"
-		end if
+		dsl.error "DSL: The 'width' supplied to dsl.anim.create is 0. Only allowed possitive values greater than 0"
 	end if
 
 	if not speed isa number then
-		if l then
-			dsl.error "DSL: The 'speed' supplied to dsl.anim.create is null or not an number."
-			dsl.error "DSL: Passed 'speed' value: " + speed
-		end if
+		dsl.error "DSL: The 'speed' supplied to dsl.anim.create is null or not an number."
+		dsl.error "DSL: Passed 'speed' value: " + speed
 
 		return null
 	end if
@@ -675,16 +625,12 @@ end function
 
 dsl.anim.animate = function(sprite)
 	if sprite == null then
-		if globals.hasIndex("DSL_Log") then
-			dsl.error "DSL: The sprite supplied to dsl.anim.animate is null, are you sure is not deleted?"
-		end if
+		dsl.error "DSL: The sprite supplied to dsl.anim.animate is null, are you sure is not deleted?"
 		return
 	end if
 
 	if sprite._currAnim == null or not sprite._currAnim isa _anim then
-		if globals.hasIndex("DSL_Log") then
-			dsl.error "DSL: The animation supplied to dsl.anim.animate is null or not a valid animation."
-		end if
+		dsl.error "DSL: The animation supplied to dsl.anim.animate is null or not a valid animation."
 		return
 	end if
 
@@ -713,16 +659,10 @@ dsl.anim.animate = function(sprite)
 	end if
 end function
 // Logging system
-
-if not globals.hasIndex("dsl") then
-	globals.dsl = {}
-end if
-
 logFile = "log.txt"
 prevLogFile = "prev_log.txt"
 
 recordStartup = function
-
 	if file.exists(logFile) then
 		if file.exists(prevLogFile) then file.delete(prevLogFile)
 		file.copy logFile, prevLogFile
@@ -739,36 +679,37 @@ recordStartup
 // DEPRECATED
 dsl.log = function(msg)
 	f = file.open(logFile, "a")
-	f.write char(13) + "WARNING - DSL: 'dsl.log' is deprecated, the new name is 'dsl.info'."
-	f.write char(13) + "INFO at " + round(time, 3) + "s: " + msg
+	f.write char(10) + "WARNING - DSL: 'dsl.log' is deprecated, the new name is 'dsl.info'."
+	f.write char(10) + "INFO at " + round(time, 3) + "s: " + msg
 	f.close
 end function
 
 dsl.info = function(msg)
 	f = file.open(logFile, "a")
-	f.write char(13) + "INFO at " + round(time, 3) + "s: " + msg
+	f.write char(10) + "INFO at " + round(time, 3) + "s: " + msg
 	f.close
 end function
 
 dsl.warn = function(msg)
 	f = file.open(logFile, "a")
-	f.write char(13) + "WARNING at " + round(time, 3) + "s: " + msg
+	f.write char(10) + "WARNING at " + round(time, 3) + "s: " + msg
 	f.close
 end function
 
 dsl.error = function(msg)
 	f = file.open(logFile, "a")
-	f.write char(13) + "ERROR at " + round(time, 3) + "s: " + msg
+	f.write char(10) + "ERROR at " + round(time, 3) + "s: " + msg
 	f.close
 end function
 
 dsl.fatal = function(msg)
 	f = file.open(logFile, "a")
-	f.write char(13) + "FATAL at " + round(time, 3) + "s: " + msg
+	f.write char(10) + "FATAL at " + round(time, 3) + "s: " + msg
 	f.close
 
 	dsl.stop
 end function
+// Finite State Machine
 dsl.fsm = {}
 
 dsl.state = {}
