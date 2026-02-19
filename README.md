@@ -5,7 +5,7 @@ of the game loop, rendering nor any other important part of the development proc
 
 **New Method**:
 
-To use this library, just go to [Releases](https://github.com/David-Avila/The-Slow-Library/releases) and download the `DSL_Lib.ms`, imported in your code with `import "DSL_Lib"` and you're ready to go.
+To use this library, just go to [Releases](https://github.com/David-Avila/The-Slow-Library/releases) and download the `DSL_Lib.ms`, import it in your code with `import "DSL_Lib"` and you're ready to go.
 
 # Game loop
 DSL offers handy functions to avoid boilerplate, but gives you the freedom to choose how you manage the main loop.
