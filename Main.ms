@@ -1,3 +1,10 @@
 import "DSL_Lib"
 
-dsl.build
+while dsl.running
+
+	if dsl.keyPressed("escape") then
+		dsl.stop
+	end if
+
+	yield
+end while
