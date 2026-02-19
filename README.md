@@ -3,17 +3,9 @@ This is a small personal library that I'm creating to speed up development of ga
 be a collection of functions and system, that help getting started with new projects. It is NOT meant to take control
 of the game loop, rendering nor any other important part of the development process.
 
-You can use the complete library or just the file you want. Import `DSL` or any of the following modules.
+**New Method**:
 
-```
-import "DSL_Log"
-import "DSL_Animations"
-import "DSL_Input"
-import "DSL_FSM"
-import "DSL_Display"
-import "DSL_Debug" // WIP
-import "DSL_Entity"
-```
+To use this library, just go to [Releases](https://github.com/David-Avila/The-Slow-Library/releases) and download the `DSL_Lib.ms`, imported in your code with `import "DSL_Lib"` and you're ready to go.
 
 # Game loop
 DSL offers handy functions to avoid boilerplate, but gives you the freedom to choose how you manage the main loop.
@@ -24,7 +16,7 @@ All of which can be acces with `dsl.PROPERTY`
 
 **Sample Gameloop**
 ```
-import "DSL"
+import "DSL_Lib"
 
 dsl.loop = function
 	// Override this function to update your game and
@@ -43,20 +35,18 @@ end while
 ```
 
 # Helper functions
-By importing `DSL` you have access to a couple of functions to save time.
+By importing `DSL_Lib` you have access to a couple of functions to save time.
 
-Use this functions to recursively find assets starting from the folder name you pass
-NOTE: PATH should be relative path, NOT absolute
+Use this functions to recursively find assets starting from the folder name you pass. If you don't supply any argument, the library will load all images stored under `/usr`.
+
+For relative path, just put the name of the folder you want to start with, i.e `assets` or `./assets` or even `assets/sprites`, `./assets/sprites`. For absolute path use `/usr/assets`, you can also load the built in images by passing `/sys/pics`. It also applys to `dsl.importSounds`
 
 ```
 dsl.importImages PATH
 dsl.importSounds PATH
 ```
 
-If you don't provide a path, the functions will start scanning at the root of the project.
-
-After using any of this functions, you can access the loaded assets through `dsl.images` or `dsl.sounds` 
-depending on the function you called.
+After using any of this functions, you can access the loaded assets through `dsl.images` or `dsl.sounds` depending on the function you called. For images, it will look for `.png` files, and for sounds both `.wav` and `.ogg` work.
 
 **IMPORTANT RULE**: There should be only one file with the same name and extension across all project folders. If there
 are more than one file, i.e two files called `player.png`, then the last file found will be the one that is saved to `dsl.images` or `dsl.sounds`. Spaces and dashes on file names will be replaced by a `_`.
@@ -69,7 +59,8 @@ A file called `player idle.png` or `player-idle.png` will be stored as `player_i
 
 ```
 // This function returns an animation that you can use with `dsl.anim.animate`
-dsl.anim.create(spriteSheetImage, individualFrameWidth, animationSpeed)
+dsl.anim.create(spriteSheetImage, individualFrameWidth, animationSpeed, loop)
+dsl.anim.createReverse(spriteSheetImage, individualFrameWidth, animationSpeed, loop)
 
 // animationSpeed's default value is 10
 
@@ -84,11 +75,32 @@ Check the next example to see how it works.
 player = new Sprite
 player.idleAnimation = dsl.anim.create(dsl.images.player_idle_sheet, 16)
 
+dsl.anim.change player, player.idleAnimation
+
 player.update = function
 	dsl.anim.animate self, self.idleAnimation
 end function
 
 ```
+
+**IMPORTANT RULE**:
+
+When using animations on a base class (a class that is going to be instantiated with `new`), all animations need to be loaded inside of a function. See the next example:
+
+```
+base = new Sprite
+base.init = function
+	self.idle = dsl.anim.create(dsl.images.player_idle, 16)
+
+	dsl.anim.change self, self.idle
+end function
+
+base.update = function
+	dsl.anim.animate self
+end function
+```
+
+That is the correct way, otherwise the same animation is going to be use for multiple sprites at the same time, which will result in all sprites having the same animation playing at the same time.
 
 # Input system
 DSL's input system exposes 5 functions:
@@ -120,8 +132,6 @@ Joysticks only:
 `JoyAxis1` through `JoyAxis29` which detect axis input from any joystick or gamepad
 `Joy1Axis1` through `Joy8Axis29` which detect axis inputs from specific joystick/gamepad 1 through 8.
 
-
-**TODO**: Assert the key passed to each function to avoid crashes when the key is not found
 
 # Logging functions
 Use these functions to log important messages to `log.txt`.
