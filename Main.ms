@@ -1,6 +1,7 @@
-import "DSL_Lib"
+import "DSL"
 
 while dsl.running
+	dsl.update
 
 	if dsl.keyPressed("escape") then
 		dsl.stop

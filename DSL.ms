@@ -1,8 +1,22 @@
-import "stringUtil"
-import "listUtil"
+import "importUtil"
+ensureImport "stringUtil"
+ensureImport "listUtil"
+ensureImport "mathUtil"
 
 // Game loop
 globals.dsl = {}
+
+if not outer.hasIndex("DSL_LIB") then
+	import "DSL_ListUtils"
+	import "DSL_MathUtils"
+	import "DSL_Debug"
+	import "DSL_Display"
+	import "DSL_Input"
+	import "DSL_Entity"
+	import "DSL_Animations"
+	import "DSL_Log"
+	import "DSL_FSM"
+end if
 
 dsl.running = true
 
@@ -49,6 +63,8 @@ dsl.build = function
 
 	files = []
 	files.push "DSL.ms"
+	files.push "DSL_ListUtils.ms"
+	files.push "DSL_MathUtils.ms"
 	files.push "DSL_Debug.ms"
 	files.push "DSL_Display.ms"
 	files.push "DSL_Input.ms"
