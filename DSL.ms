@@ -6,7 +6,7 @@ ensureImport "mathUtil"
 // Game loop
 globals.dsl = {}
 
-if not outer.hasIndex("DSL_LIB") then
+if not globals.hasIndex("DSL_LIB") then
 	import "DSL_ListUtils"
 	import "DSL_MathUtils"
 	import "DSL_Debug"
@@ -56,7 +56,7 @@ end function
 
 // Save all modules to a single file
 dsl.build = function
-	if outer.hasIndex("DSL_LIB") then
+	if globals.hasIndex("DSL_LIB") then
 		dsl.warn "DSL: Trying to build an already built library."
 		return
 	end if
@@ -73,7 +73,7 @@ dsl.build = function
 	files.push "DSL_Log.ms"
 	files.push "DSL_FSM.ms"
 
-	cont = "DSL_LIB = true // Do not delete this line"
+	cont = "globals.DSL_LIB = true // Do not delete this line"
 
 	for f in files
 		for l in file.readLines(f)
