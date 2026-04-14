@@ -3,8 +3,10 @@ dsl.disp = {}
 
 dsl.SpriteDisp = new SpriteDisplay
 dsl.SpriteDisp.scale = 1
-dsl.SpriteDisp.add = function(sprite)
-	sprite.scale = self.scale
+dsl.SpriteDisp.add = function(sprite, applyScale)
+	if applyScale != false then
+		sprite.scale = self.scale
+	end if
 	self.sprites.push sprite
 end function
 
