@@ -252,24 +252,24 @@ dsl.debug.enabled = false
 // Display Managment
 dsl.disp = {}
 
-SpriteDisp = new SpriteDisplay
-SpriteDisp.scale = 1
-SpriteDisp.add = function(sprite)
+dsl.SpriteDisp = new SpriteDisplay
+dsl.SpriteDisp.scale = 1
+dsl.SpriteDisp.add = function(sprite)
 	sprite.scale = self.scale
 	self.sprites.push sprite
 end function
 
-SpriteDisp.remove = function(sprite)
+dsl.SpriteDisp.remove = function(sprite)
 	self.sprites.removeVal sprite
 end function
 
-SpriteDisp.wipe = function
+dsl.SpriteDisp.wipe = function
 	while self.sprites.len > 0
 		self.sprites.pop
 	end while
 end function
 
-SpriteDisp.ysort = function
+dsl.SpriteDisp.ysort = function
 	if self.sprites.len <= 2 then return
 
 	changed = true
@@ -295,7 +295,7 @@ display(0).mode = displayMode.sprite
 // Default displays
 globals.SOL = display(7)
 globals.GFX = display(5)
-globals.SPD = new SpriteDisp
+globals.SPD = new dsl.SpriteDisp
 globals.TXT = display(3)
 globals.UID = display(2)
 globals.TRD = display(1)
@@ -303,6 +303,7 @@ globals.TOD = display(0)
 
 SPD.install 4
 TRD.clear
+
 // Input system
 dsl.keys = {
 	"a": {"code": "a", "lastPressed": -1, "lastReleased": -1, "wasDown": 0, "index": 0, "state" : "up", "lastChecked": -1}, 
