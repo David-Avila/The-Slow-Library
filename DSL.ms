@@ -5,6 +5,10 @@ ensureImport "mathUtil"
 
 // Game loop
 globals.dsl = {}
+dsl.pi = 3.141592
+dsl.deg2rad = dsl.pi / 180
+dsl.rad2deg = 180 / dsl.pi
+
 
 if not globals.hasIndex("DSL_LIB") then
 	import "DSL_ListUtils"
