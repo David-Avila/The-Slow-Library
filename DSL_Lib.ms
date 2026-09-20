@@ -254,8 +254,8 @@ dsl.disp = {}
 
 dsl.SpriteDisp = new SpriteDisplay
 dsl.SpriteDisp.scale = 1
-dsl.SpriteDisp.add = function(sprite, applyScale)
-	if applyScale != false then
+dsl.SpriteDisp.add = function(sprite, applyScale=true)
+	if applyScale then
 		sprite.scale = self.scale
 	end if
 	self.sprites.push sprite
@@ -373,7 +373,7 @@ dsl.keys = {
 	"up": {"code": "up", "lastPressed": -1, "lastReleased": -1, "wasDown": 0, "index": 62, "state" : "up", "lastChecked": -1}, 
 	"down": {"code": "down", "lastPressed": -1, "lastReleased": -1, "wasDown": 0, "index": 63, "state" : "up", "lastChecked": -1}, 
 	"left": {"code": "left", "lastPressed": -1, "lastReleased": -1, "wasDown": 0, "index": 64, "state" : "up", "lastChecked": -1}, 
-	"right": {"code": "right", "lastPressed": -1, "lastReleased": -1, "wasDown": 0, "index": 65}, 
+	"right": {"code": "right", "lastPressed": -1, "lastReleased": -1, "wasDown": 0, "index": 65, "state": "up", "lastChecked": -1}, 
 	"[1]": {"code": "[1]", "lastPressed": -1, "lastReleased": -1, "wasDown": 0, "index": 66, "state" : "up", "lastChecked": -1}, 
 	"[2]": {"code": "[2]", "lastPressed": -1, "lastReleased": -1, "wasDown": 0, "index": 67, "state" : "up", "lastChecked": -1}, 
 	"[3]": {"code": "[3]", "lastPressed": -1, "lastReleased": -1, "wasDown": 0, "index": 68, "state" : "up", "lastChecked": -1}, 

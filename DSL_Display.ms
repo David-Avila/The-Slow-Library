@@ -3,8 +3,8 @@ dsl.disp = {}
 
 dsl.SpriteDisp = new SpriteDisplay
 dsl.SpriteDisp.scale = 1
-dsl.SpriteDisp.add = function(sprite, applyScale)
-	if applyScale != false then
+dsl.SpriteDisp.add = function(sprite, applyScale=true)
+	if applyScale then
 		sprite.scale = self.scale
 	end if
 	self.sprites.push sprite
@@ -31,6 +31,25 @@ dsl.SpriteDisp.ysort = function
 			sp2 = self.sprites[i+1]
 
 			if sp1.y - sp1.image.height * sp1.scale * 0.5 < sp2.y - sp2.image.height * sp2.scale * 0.5 then
+				self.sprites[i] = sp2
+				self.sprites[i+1] = sp1
+				changed = true
+			end if
+		end for
+	end while
+end function
+
+dsl.SpriteDisp.sort = function
+	if self.sprites.len <= 2 then return
+
+	changed = true
+	while changed
+		changed = false
+		for i in range(0, self.sprites.len-2)
+			sp1 = self.sprites[i]
+			sp2 = self.sprites[i+1]
+
+			if sp1.z < sp2.z then
 				self.sprites[i] = sp2
 				self.sprites[i+1] = sp1
 				changed = true
