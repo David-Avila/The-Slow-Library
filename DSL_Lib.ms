@@ -290,6 +290,25 @@ dsl.SpriteDisp.ysort = function
 	end while
 end function
 
+dsl.SpriteDisp.sort = function
+	if self.sprites.len <= 2 then return
+
+	changed = true
+	while changed
+		changed = false
+		for i in range(0, self.sprites.len-2)
+			sp1 = self.sprites[i]
+			sp2 = self.sprites[i+1]
+
+			if sp1.z < sp2.z then
+				self.sprites[i] = sp2
+				self.sprites[i+1] = sp1
+				changed = true
+			end if
+		end for
+	end while
+end function
+
 display(2).mode = displayMode.sprite
 display(1).mode = displayMode.pixel
 display(0).mode = displayMode.sprite
@@ -592,6 +611,7 @@ dsl.axis = function(k1, k2="")
 		return key.axis(k1)
 	end if
 end function
+
 // Entity System
 dsl.entt = {}
 
