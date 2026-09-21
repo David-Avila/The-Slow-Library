@@ -22,6 +22,7 @@ end if
 dsl.running = true
 
 dsl.frameCount = 0
+dsl.timeScale = 1
 dsl.lastTime = 0
 dsl.dt = 1/60
 
@@ -36,32 +37,32 @@ dsl.fps = function; return dsl.fpsValue; end function
 dsl.update = function
 	// Delta time calculation
 	dsl.frameCount += 1
-	dsl.dt = time - dsl.lastTime
+	dsl.dt = (time - dsl.lastTime) * dsl.timeScale
 	dsl.lastTime = time
-
+	
 	// FPS calculation
 	dsl.fpsTimer += dsl.dt
 	dsl.fpsFrames += 1
-
+	
 	if dsl.fpsTimer >= 1 then
 		dsl.fpsValue = dsl.fpsFrames / dsl.fpsTimer
 		dsl.fpsTimer = 0
 		dsl.fpsFrames = 0
 	end if
-
+	
 	// Main loop
 	dsl.loop
-
+	
 	key.clear
 end function
 
 // Save all modules to a single file
 dsl.build = function
 	if globals.hasIndex("DSL_LIB") then
-		dsl.warn "DSL: Trying to build an already built library."
+		dsl.error "DSL: Trying to build an already built library."
 		return
 	end if
-
+	
 	files = []
 	files.push "DSL.ms"
 	files.push "DSL_ListUtils.ms"
@@ -73,15 +74,15 @@ dsl.build = function
 	files.push "DSL_Animations.ms"
 	files.push "DSL_Log.ms"
 	files.push "DSL_FSM.ms"
-
+	
 	cont = "globals.DSL_LIB = true // Do not delete this line"
-
+	
 	for f in files
 		for l in file.readLines(f)
-		cont += char(10) + l
+			cont += char(10) + l
 		end for
 	end for 
-
+	
 	file.writeLines "DSL_Lib.ms", cont
 end function
 
@@ -95,28 +96,28 @@ dsl.newSprite = function(imgOrPath, x=0, y=0, scale=1)
 	s.x = x
 	s.y = y
 	s.scale = scale
-
+	
 	return s
 end function
 
 dsl._scanFolder = function(ext, folder)
 	filesFound = []
-
+	
 	for fileName in file.children(folder)
 		filePath = file.child(folder, fileName)
-
+		
 		if file.info(filePath).isDirectory then
 			filesFound += dsl._scanFolder(ext, filePath)
 		else if fileName isa string then
 			if fileName.endsWith(ext) then
 				fileName.replace " ", "_"
 				fileName.replace "-", "_"
-
+				
 				filesFound.push {"name": fileName - ("." + ext), "path": filePath}
 			end if
 		end if
 	end for
-
+	
 	return filesFound
 end function
 
@@ -127,9 +128,9 @@ dsl.importImages = function(folder="")
 	else if not folder[0] == "/" then
 		folder = file.child(pwd, folder)
 	end if
-
+	
 	filesFound = dsl._scanFolder("png", folder)
-
+	
 	for f in filesFound
 		dsl.images[f.name] = file.loadImage(f.path)
 	end for
@@ -142,15 +143,45 @@ dsl.importSounds = function(folder="")
 	else if not folder[0] == "/" then
 		folder = file.child(pwd, folder)
 	end if
-
+	
 	filesFound = dsl._scanFolder("wav", folder)
 	filesFound += dsl._scanFolder("ogg", folder)
-
+	
 	for f in filesFound
 		dsl.sounds[f.name] = file.loadSound(f.path)
 	end for
 end function
 
+dsl._getFolders = function(folder="")
+	foldersFound = []
+	
+	for fileName in file.children(folder)
+		filePath = file.child(folder, fileName)
+		
+		if file.info(filePath).isDirectory then
+			foldersFound += [filePath]
+			foldersFound += dsl._getFolders(filePath)
+		end if
+	end for
+	
+	return foldersFound
+end function
+
+dsl.importPath = function(folder="")
+	if folder == "" then 
+		folder = pwd
+	else if not folder[0] == "/" then
+		folder = file.child(pwd, folder)
+	end if
+	
+	foldersFound = dsl._getFolders(folder)
+	
+	for f in foldersFound
+		if env.importPaths.indexOf(f) == null then
+			env.importPaths.push f
+		end if
+	end for
+end function
 // List Utils
 
 // Return this vector minus another.

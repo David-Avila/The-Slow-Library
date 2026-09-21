@@ -150,3 +150,34 @@ dsl.importSounds = function(folder="")
 		dsl.sounds[f.name] = file.loadSound(f.path)
 	end for
 end function
+
+dsl._getFolders = function(folder="")
+	foldersFound = []
+	
+	for fileName in file.children(folder)
+		filePath = file.child(folder, fileName)
+		
+		if file.info(filePath).isDirectory then
+			foldersFound += [filePath]
+			foldersFound += dsl._getFolders(filePath)
+		end if
+	end for
+	
+	return foldersFound
+end function
+
+dsl.importPath = function(folder="")
+	if folder == "" then 
+		folder = pwd
+	else if not folder[0] == "/" then
+		folder = file.child(pwd, folder)
+	end if
+	
+	foldersFound = dsl._getFolders(folder)
+	
+	for f in foldersFound
+		if env.importPaths.indexOf(f) == null then
+			env.importPaths.push f
+		end if
+	end for
+end function
