@@ -183,7 +183,8 @@ dsl.importPath = function(folder="")
 		folder = file.child(pwd, folder)
 	end if
 	
-	foldersFound = dsl._getFolders(folder)
+	foldersFound = [folder]
+	foldersFound += dsl._getFolders(folder)
 	
 	for f in foldersFound
 		if env.importPaths.indexOf(f) == null then

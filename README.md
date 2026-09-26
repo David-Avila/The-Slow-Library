@@ -56,6 +56,21 @@ are more than one file, i.e two files called `player.png`, then the last file fo
 For instance:
 A file called `player idle.png` or `player-idle.png` will be stored as `player_idle`, and can be accessed with `dsl.images.player_idle`. That also applies to sound effects and music.
 
+`dsl.importPath` does the same for your code instead of your assets, adding folders to `env.importPaths` so Mini Micro knows where to look for your files. It adds the folder you pass and every folder inside it, recursively.
+
+```
+dsl.importPath PATH
+```
+
+For instance, to load `/scripts/misc/common/lib.ms` you would normally have to add `/scripts/misc/common` to `env.importPaths` by hand, otherwise Mini Micro won't find the file. This function lets you split a project into as many nested folders as you need without worrying about where Mini Micro searches for them.
+
+Called without an argument it uses your project folder, which is the most common use:
+```
+dsl.importPath
+```
+
+Relative paths work like they do for `dsl.importImages`, so you can pass a folder name, a relative path or an absolute one, and folders that are already in `env.importPaths` are skipped.
+
 # Animation System
 `DSL` counts with a small yet solid animation system. With these functions you can create an animate any sprite.
 
