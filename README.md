@@ -10,9 +10,11 @@ To use this library, just go to [Releases](https://github.com/David-Avila/The-Sl
 # Game loop
 DSL offers handy functions to avoid boilerplate, but gives you the freedom to choose how you manage the main loop.
 
-You have access to several properties, `dt`, `frameCount`, `lastTime`, `fps`. 
+You have access to several properties, `dt`, `frameCount`, `lastTime`, `fps`, `timeScale`, `version`.
 
 All of which can be acces with `dsl.PROPERTY`
+
+`dsl.version` is the version of the library you imported, use it if you need to support more than one version of DSL.
 
 **Sample Gameloop**
 ```
@@ -158,62 +160,56 @@ View those logs using `view "log.txt"` in Mini Micro, or your favorite text edit
 
 
 # Finite State Machine
-**Documentation will be added soon**
+`dsl.addFSM` turns any object into a state machine. States are added with `addState` and each one has its own `update`, `enter` and `exit` functions. `changeState` moves from one state to the next and `updateStates` runs the `update` of the state you are currently on.
 
-For now, this is an example of how it's used:
 ```
-import "DSL"
+dsl.addFSM player // 'player' can be any type of map, custom, empty, sprite...
 
-Base = new Sprite
-Base.image = file.loadImage("/sys/pics/Wumpus.png")
-Base.x = 480; Base.y = 320
+player.addState "idle"
+player.addState "walk"
 
-dsl.addFSM Base
-
-Base.addState "idle"
-Base.addState "walk"
-
-Base.idle.update = function(obj)
-	if dsl.keyPressed("c") then
-		obj.changeState "walk"
-	end if
+player.idle.update = function(obj)
+  // Inside of a state, 'self' corresponds to the state map itself.
+  // The argument passed to you, in this case 'obj', corresponds to the object
+  // that has the state machine, in this case the 'player' object
+	if dsl.keyPressed("c") then obj.changeState "walk"
 end function
 
-Base.walk.update = function(obj)
-	if dsl.keyPressed("c") then
-		obj.changeState "idle"
-	end if
-end function
+// `prev` is the state we are coming from
+player.idle.enter = function(prev, obj); end function
 
-Base.update = function
+// `next` is the state we are going to
+player.walk.exit = function(next, obj); end function
+
+player.update = function
 	self.updateStates
 end function
 
-ins = Base.clone
-ins.idle.enter = function(prev, obj)
-	print "Entering idle state on instance"
-end function
-
-ins.walk.enter = function(prev, obj)
-	print "Entering walk state on instance"
-end function
-
-SPD.add ins
-
-while dsl.running
-	dsl.update
-
-	if dsl.keyPressed("escape") then
-		dsl.stop
-	end if
-
-	ins.update
-
-	yield
-end while
-
-SPD.remove ins
+player.inState "walk"		// true while on the "walk" state
 ```
+
+`changeState` runs `exit` on the state you are leaving and then `enter` on the one you are entering, so anything that should only happen once per transition belongs there instead of in `update`. `inState` also takes a list of names, like `obj.inState ["walk", "idle"]`, and `player.clone` copies a whole state machine, giving the copy its own independent states.
+
+# Locked States
+States can be locked. A locked state can still be entered, but it can't be changed to another state, which is useful for states the player shouldn't be able to skip out of, like a game over or a dialogue scene.
+
+`addState` takes a second parameter that marks the new state as locked, it defaults to `false`:
+```
+Base.addState "idle"
+Base.addState "walk"
+Base.addState "gameOver", true
+```
+
+While the entity is on a locked state, every call to `changeState` is ignored: `exit` is not called and the state stays the same. Set `locked` back to `false` to allow changes again:
+```
+Base.changeState "idle"    // ignored, "gameOver" is locked
+Base.gameOver.locked = false
+Base.changeState "idle"    // now it changes
+```
+
+Every state also has a `locked` property you can read and write at any time, and it's kept when cloning a state or a whole FSM.
+
+**NOTE**: `inState` and `updateStates` still work as usual while a state is locked, only changing to a different state is blocked.
 
 
 # Entity Functions

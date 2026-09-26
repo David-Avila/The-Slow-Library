@@ -3,12 +3,14 @@ dsl.fsm = {}
 
 dsl.state = {}
 dsl.state.name = "default"
+dsl.state.locked = false
 dsl.state.update = function(obj); end function
 dsl.state.enter = function(prev, obj); end function
 dsl.state.exit = function(prev, obj); end function
 dsl.state.clone = function
 	s = new self
 	s.name = "" + self.name
+	s.locked = self.locked
 	s.update = @self.update
 	s.enter = @self.enter
 	s.exit = @self.exit
@@ -19,9 +21,10 @@ end function
 dsl.addFSM = function(obj)
 	obj.state = null
 
-	obj.addState = function(name)
+	obj.addState = function(name, locked=false)
 		s = new dsl.state
 		s.name = name
+		s.locked = locked
 		self[name] = s
 	end function
 
@@ -33,6 +36,7 @@ dsl.addFSM = function(obj)
 		if self.state == next then return
 		
 		if self.state != null then
+			if self[self.state].locked then return
 			self[self.state].exit next, self
 		end if
 

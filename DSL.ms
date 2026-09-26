@@ -18,6 +18,9 @@ if not globals.hasIndex("DSL_LIB") then
 	import "DSL_FSM"
 end if
 
+// Library version
+dsl.version = "0.2"
+
 dsl.running = true
 
 dsl.frameCount = 0
