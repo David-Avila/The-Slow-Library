@@ -18,6 +18,8 @@ recordStartup
 
 // DEPRECATED
 dsl.log = function(msg)
+	if not dsl.debug.enabled then return
+	
 	f = file.open(logFile, "a")
 	f.write char(10) + "WARNING - DSL: 'dsl.log' is deprecated, the new name is 'dsl.info'."
 	f.write char(10) + "INFO at " + round(time, 3) + "s: " + msg
@@ -25,18 +27,24 @@ dsl.log = function(msg)
 end function
 
 dsl.info = function(msg)
+	if not dsl.debug.enabled then return
+	
 	f = file.open(logFile, "a")
 	f.write char(10) + "INFO at " + round(time, 3) + "s: " + msg
 	f.close
 end function
 
 dsl.warn = function(msg)
+	if not dsl.debug.enabled then return
+	
 	f = file.open(logFile, "a")
 	f.write char(10) + "WARNING at " + round(time, 3) + "s: " + msg
 	f.close
 end function
 
 dsl.error = function(msg)
+	if not dsl.debug.enabled then return
+	
 	f = file.open(logFile, "a")
 	f.write char(10) + "ERROR at " + round(time, 3) + "s: " + msg
 	f.close
@@ -46,6 +54,6 @@ dsl.fatal = function(msg)
 	f = file.open(logFile, "a")
 	f.write char(10) + "FATAL at " + round(time, 3) + "s: " + msg
 	f.close
-
+	
 	dsl.stop
 end function

@@ -109,10 +109,16 @@ dsl._scanFolder = function(ext, folder)
 			filesFound += dsl._scanFolder(ext, filePath)
 		else if fileName isa string then
 			if fileName.endsWith(ext) then
-				fileName.replace " ", "_"
-				fileName.replace "-", "_"
+				fn = ""
+				for s in fileName
+					if s == " " or s == "-" then
+						fn += "_"
+					else
+						fn += s
+					end if
+				end for
 				
-				filesFound.push {"name": fileName - ("." + ext), "path": filePath}
+				filesFound.push {"name": fn - ("." + ext), "path": filePath}
 			end if
 		end if
 	end for
