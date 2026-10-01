@@ -16,10 +16,11 @@ if not globals.hasIndex("DSL_LIB") then
 	import "DSL_Animations"
 	import "DSL_Log"
 	import "DSL_FSM"
+	import "DSL_Save"
 end if
 
 // Library version
-dsl.version = "0.2"
+dsl.version = "0.3"
 
 dsl.running = true
 
@@ -76,6 +77,7 @@ dsl.build = function
 	files.push "DSL_Animations.ms"
 	files.push "DSL_Log.ms"
 	files.push "DSL_FSM.ms"
+	files.push "DSL_Save.ms"
 	
 	cont = "globals.DSL_LIB = true // Do not delete this line"
 	

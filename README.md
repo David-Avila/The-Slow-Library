@@ -227,6 +227,54 @@ Every state also has a `locked` property you can read and write at any time, and
 **NOTE**: `inState` and `updateStates` still work as usual while a state is locked, only changing to a different state is blocked.
 
 
+# Save System
+DSL can write any value to a file as json, so you don't need to build your own save format. The data is XOR encrypted with a key and saved with a `DSLv1:` head marker, which is checked when loading so a file that isn't one of ours gets rejected instead of loading garbage.
+
+```
+dsl.saveData path, data, encKey
+dsl.loadData path, encKey
+```
+
+`encKey` defaults to `"dsl-save-key"`, and since it's an argument you can change it per file if you want:
+
+```
+dsl.saveData "player.dsf", game.data
+dsl.saveData "settings.dsf", settings, "a different key"
+
+game.data = dsl.loadData "player.dsf"
+settings = dsl.loadData "settings.dsf", "a different key"
+```
+
+`saveData` writes the file and `loadData` returns the data that was stored, or `null` when it couldn't be read. On a first run the file won't exist yet, so check the result before using it and fill in your defaults:
+
+```
+game.data = dsl.loadData "player.dsf"
+
+if game.data == null then
+	game.data = {coins: 0, level: 1}
+	dsl.saveData "player.dsf", game.data
+end if
+```
+
+The path can be any file you can reach, so `"data.dsf"`, `"saves/player.dsf"` or an absolute `"/usr/saves/player.dsf"` all work. Nothing is created for you, the folder has to be there already.
+
+**NOTE**: `encKey` has to be the same string on save and load. If you change it, the old files can't be read anymore.
+
+You can also do the encryption on its own, without touching the filesystem:
+
+```
+text = dsl.encrypt(data, encKey)
+data = dsl.decrypt(text, encKey)
+```
+
+`encrypt` returns the encrypted string, and `decrypt` takes it back to the original value. `saveData` and `loadData` are just these two plus `file.open`, so if you need to store the result somewhere else, like in Mini Cloud, use these.
+
+**IMPORTANT RULE**: this is obfuscation, not real security. The key is inside your game, so anyone who looks at your code can read the data back. It stops a save from being casually edited, which is usually what you want, but it will not stop someone who is determined.
+
+Only numbers, strings, lists and maps survive the round trip, because those are what json can write. Anything else (sprites, images, functions) has no json representation, so `encrypt` returns `null` for it instead of writing a broken file. Custom objects work fine as long as the values you store inside them are one of those four types.
+
+Map keys should be strings. `dsl.decrypt` returns `null` if the text was changed by hand or the key is wrong, so check for `null` after loading rather than assuming it worked.
+
 # Entity Functions
 One function that you can use to handle basic entities.
 
