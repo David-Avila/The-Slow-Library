@@ -95,7 +95,7 @@ player.idleAnimation = dsl.anim.create(dsl.images.player_idle_sheet, 16)
 dsl.anim.change player, player.idleAnimation
 
 player.update = function
-	dsl.anim.animate self, self.idleAnimation
+	dsl.anim.animate self
 end function
 
 ```
