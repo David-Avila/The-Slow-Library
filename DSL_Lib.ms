@@ -254,6 +254,19 @@ list.angleTo = function(other)
 	return atan((other[1] - self[1]), (other[0] - self[0])) * rad2deg 
 end function
 
+list.lerp = function(other, t)
+  if other isa map then
+    x = other.x
+    y = other.y
+  else if other isa list then
+    x = other[0]
+    y = other[1]
+  end if
+  
+  self[0] = lerp(self[0], x, t)
+  self[1] = lerp(self[1], y, t)
+end function
+
 // Rotates the [x,y] a certain amount of degrees counter-clockwise
 // i.e: [1, 0].rotate 90 = [0, 1]
 list.rotate = function(angle)
@@ -274,6 +287,7 @@ globals.xyList = function(listOrMap)
 	if listOrMap isa list then return listOrMap[0:2]
 	return [listOrMap.x, listOrMap.y]
 end function
+
 // Math utils
 
 // Helper functions
