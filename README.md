@@ -239,16 +239,17 @@ dsl.loadData path, encKey
 
 ```
 dsl.saveData "player.dsf", game.data
-dsl.saveData "settings.dsf", settings, "a different key"
+dsl.saveData "settings.dsf", settings, "settings key"
 
 game.data = dsl.loadData "player.dsf"
-settings = dsl.loadData "settings.dsf", "a different key"
+settings = dsl.loadData "settings.dsf", "settings key"
 ```
 
+File name can be whatever you want, such as `save.sav`, `save.dat`, `data.bin` or whatever you want.
 `saveData` writes the file and `loadData` returns the data that was stored, or `null` when it couldn't be read. On a first run the file won't exist yet, so check the result before using it and fill in your defaults:
 
 ```
-game.data = dsl.loadData "player.dsf"
+game.data = dsl.loadData("player.dsf")
 
 if game.data == null then
 	game.data = {coins: 0, level: 1}
@@ -267,11 +268,11 @@ text = dsl.encrypt(data, encKey)
 data = dsl.decrypt(text, encKey)
 ```
 
-`encrypt` returns the encrypted string, and `decrypt` takes it back to the original value. `saveData` and `loadData` are just these two plus `file.open`, so if you need to store the result somewhere else, like in Mini Cloud, use these.
+`encrypt` returns the encrypted string, and `decrypt` takes it back to the original value. `saveData` and `loadData` are just these two plus `file.open`, so if you need to store the result somewhere else, like in the cloud, use these.
 
 **IMPORTANT RULE**: this is obfuscation, not real security. The key is inside your game, so anyone who looks at your code can read the data back. It stops a save from being casually edited, which is usually what you want, but it will not stop someone who is determined.
 
-Only numbers, strings, lists and maps survive the round trip, because those are what json can write. Anything else (sprites, images, functions) has no json representation, so `encrypt` returns `null` for it instead of writing a broken file. Custom objects work fine as long as the values you store inside them are one of those four types.
+Anything that can be parsed to json with `json.toJSON` can be saved with this system.
 
 Map keys should be strings. `dsl.decrypt` returns `null` if the text was changed by hand or the key is wrong, so check for `null` after loading rather than assuming it worked.
 
